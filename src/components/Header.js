@@ -3,6 +3,9 @@ import Logo from "../media/Logo.png";
 import { ROLES } from "../constants";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import PersonIcon from "@mui/icons-material/Person";
+import WifiIcon from "@mui/icons-material/Wifi";
+import WifiOffIcon from "@mui/icons-material/WifiOff";
+import Contract from "./utilities/contract/contract";
 
 const Header = ({ user_role }) => {
   const [navigation, setNavigation] = useState([]);
@@ -30,7 +33,7 @@ const Header = ({ user_role }) => {
     <header className="header sticky top-0 bg-sky-800 text-white shadow-sm flex items-center justify-between px-8 py-02">
       <h1 className="w-3/12">
         <a href="/">
-          <img className="bg-white" src={Logo} />
+          <img className="bg-white rounded-md m-2" src={Logo} />
         </a>
       </h1>
 
@@ -47,12 +50,12 @@ const Header = ({ user_role }) => {
         </ul>
       </nav>
 
-      <div className="w-3/12 flex justify-end">
-        <a href="" className="text-lg font-bold flex items-center p-3">
+      <div className="w-3/12 flex justify-end items-center">
+        <a href="" className="text-lg font-bold flex items-center px-5">
           {user_role == ROLES.ISSUER ? (
-            <AdminPanelSettingsIcon className="mx-2" />
+            <AdminPanelSettingsIcon className="mx-1" />
           ) : (
-            <PersonIcon className="mx-2" />
+            <PersonIcon className="mx-1" />
           )}
           <p>{user_role}</p>
         </a>

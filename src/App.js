@@ -16,6 +16,7 @@ import MakeRequest from "./components/MakeRequest";
 import IssuerRequests from "./components/IssuerRequests";
 import FulfilledRequests from "./components/FulfilledRequests";
 import VerifyAccessData from "./components/VerifyAccessData";
+import Main from "./components/Main";
 
 const App = () => {
   const [role, setRole] = useState(ROLES.HOLDER);
@@ -37,6 +38,7 @@ const App = () => {
         <ToastContainer />
         <Routes>
           {/* HOLDER Routes  */}
+          <Route path="/" element={<Main />} />
           <Route path="/upload" element={<Upload />} />
           <Route path="/mydata" element={<ShowData />} />
           <Route path="/issuer_requests" element={<IssuerRequests />} />

@@ -4,9 +4,14 @@ import ABI from "../../../abi.json";
 
 // Meta Mask and Wallet functions
 async function requestAccounts() {
-  const provider = new ethers.providers.Web3Provider(window.ethereum);
-  await provider.send("eth_requestAccounts", []);
-  return provider.getSigner();
+  if (window.ethereum) {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const accounts = await provider.send("eth_requestAccounts", []);
+    console.log(accounts);
+    return provider.getSigner();
+  } else {
+    alert("Install Metamask Wallet to run the application");
+  }
 }
 
 async function getOwner() {
