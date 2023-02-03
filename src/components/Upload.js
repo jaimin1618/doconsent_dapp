@@ -41,7 +41,7 @@ const Upload = () => {
           htmlFor="input-group-1"
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
         >
-          Your Email
+          Data Name
         </label>
         <div className="relative mb-6">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">

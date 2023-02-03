@@ -71,6 +71,64 @@ async function removeUserData(data_id) {
   return status;
 }
 
+async function isCurrentUserIssuer(user_address) {
+  const signer = await requestAccounts();
+  const contract = new ethers.Contract(address, ABI.abi, signer);
+  const data = await contract.isUserIssuer(user_address);
+  return data;
+}
+
+async function makeIssuerRequest(data_id) {
+  let status = false;
+  try {
+    const signer = await requestAccounts();
+    const contract = new ethers.Contract(address, ABI.abi, signer);
+    const tx = await contract.makeRequest(data_id);
+    status = await tx.wait();
+    if (!status) status = false;
+  } catch (e) {
+    console.error("Error occured: ", e);
+    status = false;
+  }
+  return status;
+}
+
+async function getRequestIndexes() {
+  const signer = await requestAccounts();
+  const contract = new ethers.Contract(address, ABI.abi, signer);
+  const data = await contract.getRequestIndexesForCurrentUser();
+  return data;
+}
+
+async function getRequestByID(request_id) {
+  const signer = await requestAccounts();
+  const contract = new ethers.Contract(address, ABI.abi, signer);
+  const data = await contract.getRequestById(request_id);
+  return data;
+}
+
+async function fulfillIssuerRequest(request_id, statusCode) {
+  let status = false;
+  try {
+    const signer = await requestAccounts();
+    const contract = new ethers.Contract(address, ABI.abi, signer);
+    const tx = await contract.fulfillRequest(request_id, statusCode);
+    status = await tx.wait();
+    if (!status) status = false;
+  } catch (e) {
+    console.error("Error occured: ", e);
+    status = false;
+  }
+  return status;
+}
+
+async function getRequestsMadeByCurrentUser() {
+  const signer = await requestAccounts();
+  const contract = new ethers.Contract(address, ABI.abi, signer);
+  const data = await contract.getUserRequest();
+  return data;
+}
+
 export default {
   requestAccounts,
   getOwner,
@@ -79,4 +137,10 @@ export default {
   getAddress,
   getUserDataByID,
   removeUserData,
+  isCurrentUserIssuer,
+  makeIssuerRequest,
+  getRequestIndexes,
+  getRequestByID,
+  fulfillIssuerRequest,
+  getRequestsMadeByCurrentUser,
 };
