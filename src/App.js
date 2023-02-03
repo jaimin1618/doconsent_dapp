@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "react-toastify/dist/ReactToastify.css";
 
-function App() {
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Main from "./components/Main";
+import Requests from "./components/Requests";
+import Read from "./components/Read";
+import Upload from "./components/Upload";
+import ShowData from "./components/ShowData";
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Header />
+        <ToastContainer />
+        <Routes>
+          <Route path="/upload" element={<Upload />} />
+          {/* <Route path="/read" element={<Read />} /> */}
+          <Route path="/read" element={<ShowData />} />
+          <Route path="/requests" element={<Requests />} />
+        </Routes>
+        <Footer />
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
