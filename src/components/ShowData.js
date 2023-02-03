@@ -1,20 +1,45 @@
 import React, { useState, useEffect } from "react";
-import OpenWithIcon from "@mui/icons-material/OpenWith";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import DataObjectIcon from "@mui/icons-material/DataObject";
+import { toast } from "react-toastify";
 
+import Modal from "./Modal";
 import Contract from "./utilities/contract/contract";
+import IPFS from "./utilities/ipfs/ipfs";
 
 const ShowData = () => {
-  const [indexes, setIndexes] = useState([]);
   const [cards, setCards] = useState([]);
+  const [modalContent, setModalContent] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const display_data = async (el) => {
+    const cid = el.user_data_cid;
+    const raw = await IPFS.read_data(cid);
+    const json = JSON.parse(raw);
+    setModalContent({ dataName: json.data_name, content: json.data_content });
+    setIsModalOpen(true);
+  };
+
+  const delete_data = async (el) => {
+    const id = el.user_data_id;
+    const status = await Contract.removeUserData(id);
+    if (!status) {
+      toast("Data delete failed, Try again later");
+      return;
+    } else {
+      toast("Data deleted successfully");
+    }
+
+    const _cards = cards.filter((el) => el.user_data_id != id);
+    setCards(_cards);
+  };
 
   useEffect(() => {
     const get_indexes = async () => {
       const raw = await Contract.getCurrentUserDataIndexes();
       const idx = raw.map((el) => parseInt(el, 10));
-      setIndexes(idx);
       return idx;
     };
 
@@ -28,15 +53,20 @@ const ShowData = () => {
 
     const get_data = async () => {
       const results = await get_promises();
-      console.log(results);
+      const { user_data_cid } = results;
       setCards(results);
     };
-    
+
     get_data();
   }, []);
 
   return (
     <div className="h-screen">
+      <Modal
+        modalContent={modalContent}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
       <section className="container px-6 py-4 mx-auto">
         <div className="grid gap-6 mb-8 md:grid-cols-2 lg:grid-cols-3">
           {/* Show data */}
@@ -50,19 +80,24 @@ const ShowData = () => {
                   <DataObjectIcon />
                 </div>
                 <div className="w-full h-full flex justify-around items-center">
-                  {/* <p className="mb-2 text-sm font-medium text-gray-900">Data Name</p> */}
-                  <p className="text-lg font-normal text-gray-800">
+                  <p className="mb-2 text-sm font-medium text-gray-900">
                     {el.user_data_name}
                   </p>
+                  <p className="text-lg font-normal text-gray-800">
+                    {/* {el.user_data_cid.split(3)} */}
+                  </p>
                   <button className="flex justify-around text-green-700">
-                    <OpenWithIcon />
+                    <VisibilityIcon onClick={() => display_data(el)} />
                   </button>
-                  <button className="flex justify-around text-red-700">
+                  <button
+                    onClick={() => delete_data(el)}
+                    className="flex justify-around text-red-700"
+                  >
                     <DeleteIcon />
                   </button>
-                  <button className="flex justify-around text-blue-700">
+                  {/* <button className="flex justify-around text-blue-700">
                     <EditIcon />
-                  </button>
+                  </button> */}
                 </div>
               </div>
             );
