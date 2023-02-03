@@ -18,16 +18,21 @@ const ShowData = () => {
       return idx;
     };
 
-    const get_data = async () => {
+    const get_promises = async () => {
       const idx = await get_indexes();
-      const _cards = idx.map(async (el, index) => {
+      const _cards = await idx.map(async (el, index) => {
         return await Contract.getUserDataByID(el);
       });
-      setCards(_cards);
-      return _cards;
+      return await Promise.all(_cards);
     };
 
-    setCards(get_data());
+    const get_data = async () => {
+      const results = await get_promises();
+      console.log(results);
+      setCards(results);
+    };
+    
+    get_data();
   }, []);
 
   return (
@@ -36,7 +41,6 @@ const ShowData = () => {
         <div className="grid gap-6 mb-8 md:grid-cols-2 lg:grid-cols-3">
           {/* Show data */}
           {cards.map((el, idx) => {
-            // console.log(el);
             return (
               <div
                 key={idx}
@@ -48,8 +52,7 @@ const ShowData = () => {
                 <div className="w-full h-full flex justify-around items-center">
                   {/* <p className="mb-2 text-sm font-medium text-gray-900">Data Name</p> */}
                   <p className="text-lg font-normal text-gray-800">
-                    {el[1]}
-                    {/* {el} */}
+                    {el.user_data_name}
                   </p>
                   <button className="flex justify-around text-green-700">
                     <OpenWithIcon />
