@@ -14,6 +14,7 @@ const Header = ({ user_role }) => {
     { path: "mydata", linkName: "MyData" },
     { path: "issuer_requests", linkName: "Issuer-Requests" },
     { path: "give_consent", linkName: "Give-Consent" },
+    { path: "remoke_consent", linkName: "Revoke-Consent" },
   ];
 
   const issuerNavigation = [
@@ -37,7 +38,7 @@ const Header = ({ user_role }) => {
         </a>
       </h1>
 
-      <nav className="nav font-semibold text-lg">
+      <nav className="nav font-semibold text-sm">
         <ul className="flex items-center">
           {navigation.map((el, index) => (
             <li
@@ -51,7 +52,10 @@ const Header = ({ user_role }) => {
       </nav>
 
       <div className="w-3/12 flex justify-end items-center">
-        <a href="" className="text-lg font-bold flex items-center px-5">
+        <a
+          href="verifier_status"
+          className="text-lg font-bold flex items-center px-5"
+        >
           {user_role == ROLES.ISSUER ? (
             <AdminPanelSettingsIcon className="mx-1" />
           ) : (

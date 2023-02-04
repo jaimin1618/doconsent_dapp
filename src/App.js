@@ -6,6 +6,7 @@ import Footer from "./components/Footer";
 import Upload from "./components/Upload";
 import ShowData from "./components/ShowData";
 import GiveConsent from "./components/GiveConsent";
+import VerifierStatus from "./components/VerifierStatus";
 
 import { ROLES } from "./constants";
 import Contract from "../src/components/utilities/contract/contract";
@@ -17,6 +18,7 @@ import IssuerRequests from "./components/IssuerRequests";
 import FulfilledRequests from "./components/FulfilledRequests";
 import VerifyAccessData from "./components/VerifyAccessData";
 import Main from "./components/Main";
+import RevokeConsent from "./components/RevokeConsent";
 
 const App = () => {
   const [role, setRole] = useState(ROLES.HOLDER);
@@ -43,6 +45,8 @@ const App = () => {
           <Route path="/mydata" element={<ShowData />} />
           <Route path="/issuer_requests" element={<IssuerRequests />} />
           <Route path="/give_consent" element={<GiveConsent />} />
+          <Route path="/remoke_consent" element={<RevokeConsent />} />
+          <Route path="/verifier_status" element={<VerifierStatus />} />
 
           {/* ISSUER Routes  */}
           <Route path="/my_permissioned_data" element={<VerifyAccessData />} />

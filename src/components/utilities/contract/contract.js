@@ -7,7 +7,7 @@ async function requestAccounts() {
   if (window.ethereum) {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const accounts = await provider.send("eth_requestAccounts", []);
-    console.log(accounts);
+    // console.log(accounts);
     return provider.getSigner();
   } else {
     alert("Install Metamask Wallet to run the application");
@@ -134,6 +134,43 @@ async function getRequestsMadeByCurrentUser() {
   return data;
 }
 
+async function giveConsent(data_id, recipient_address) {
+  let status = false;
+  try {
+    const signer = await requestAccounts();
+    const contract = new ethers.Contract(address, ABI.abi, signer);
+    const tx = await contract.give_consent(data_id, recipient_address);
+    status = await tx.wait();
+    if (!status) status = false;
+  } catch (e) {
+    console.error("Error occured: ", e);
+    status = false;
+  }
+  return status;
+}
+
+async function removeConsent(data_id, recipient_address) {
+  let status = false;
+  try {
+    const signer = await requestAccounts();
+    const contract = new ethers.Contract(address, ABI.abi, signer);
+    const tx = await contract.revoke_consent(data_id, recipient_address);
+    status = await tx.wait();
+    if (!status) status = false;
+  } catch (e) {
+    console.error("Error occured: ", e);
+    status = false;
+  }
+  return status;
+}
+
+async function getConsentGivenListByDataId(data_id) {
+  const signer = await requestAccounts();
+  const contract = new ethers.Contract(address, ABI.abi, signer);
+  const data = await contract.getApprovedConsentsForData(data_id);
+  return data;
+}
+
 export default {
   requestAccounts,
   getOwner,
@@ -148,4 +185,7 @@ export default {
   getRequestByID,
   fulfillIssuerRequest,
   getRequestsMadeByCurrentUser,
+  giveConsent,
+  removeConsent,
+  getConsentGivenListByDataId,
 };
