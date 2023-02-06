@@ -1,7 +1,6 @@
 import { create } from "ipfs-http-client";
 const environment = process.env.REACT_APP_ENVIRONMENT;
 
-console.log(environment);
 const node =
   environment === "development"
     ? create(process.env.REACT_APP_LOCAL_IPFS_NODE)
