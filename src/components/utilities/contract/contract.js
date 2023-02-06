@@ -1,6 +1,7 @@
 import { ethers } from "ethers";
-import { address } from "../../../constants";
-import ABI from "../../../abi.json";
+import _abi from "../../../abi.json";
+const address = process.env.REACT_APP_CONTRACT_ADDRESS;
+const ABI = { abi: _abi };
 
 // Meta Mask and Wallet functions
 async function requestAccounts() {
