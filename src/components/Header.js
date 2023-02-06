@@ -9,6 +9,7 @@ import Contract from "./utilities/contract/contract";
 
 const Header = ({ user_role }) => {
   const [navigation, setNavigation] = useState([]);
+  
   const holderNavigation = [
     { path: "upload", linkName: "Upload data" },
     { path: "mydata", linkName: "My Data" },

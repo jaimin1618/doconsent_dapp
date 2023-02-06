@@ -8,11 +8,19 @@ const CheckConsent = () => {
   const [options, setOptions] = useState([]);
   const [recipientAddress, setRecipientAddress] = useState("");
   const [selectedOption, setSelectedOption] = useState(0);
-  const [hasConsent, setHasConsent] = useState(false);
+  const [showInfoAlert, setShowInfoAlert] = useState(false);
+  const [showWarning, setShowWarningAlert] = useState(false);
 
   const runCheckConsent = async () => {
-    console.log(selectedOption, recipientAddress);
-    // const status = await Contract.checkConsent(data_id, recipient_address);
+    const status = await Contract.checkConsent(
+      selectedOption,
+      recipientAddress
+    );
+    if (status == true) {
+      setShowInfoAlert(true);
+    } else {
+      setShowWarningAlert(true);
+    }
   };
 
   useEffect(() => {
@@ -86,12 +94,8 @@ const CheckConsent = () => {
 
         {/* SHOW STATUS */}
         <div className="my-2">
-          <div className="hidden">
-            <InfoAlert />
-          </div>
-          <div className="hidden">
-            <WarningAlert />
-          </div>
+          <InfoAlert show={showInfoAlert} setShow={setShowInfoAlert} />
+          <WarningAlert show={showWarning} setShow={setShowWarningAlert} />
         </div>
         {/* <p className="text-base">
         Lorem ipsum dolor sit, amet consectetur adipisicing elit.

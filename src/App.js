@@ -21,14 +21,16 @@ import { ToastContainer } from "react-toastify";
 
 const App = () => {
   const [role, setRole] = useState(ROLES.HOLDER);
+  const [userAccount, setUserAccount] = useState("");
 
   useEffect(() => {
-    const get_address = async () => {
+    const setUserRole = async () => {
       const user_address = await Contract.getAddress();
+      setUserAccount(userAccount);
       const isIssuer = await Contract.isCurrentUserIssuer(user_address);
       isIssuer ? setRole(ROLES.ISSUER) : setRole(ROLES.HOLDER);
     };
-    get_address();
+    setUserRole();
   }, []);
 
   return (

@@ -1,4 +1,21 @@
-const InfoAlert = ({ data_name }) => {
+import { useState, useEffect } from "react";
+
+const InfoAlert = ({ show, setShow }) => {
+  useEffect(() => {
+    const timeId = setTimeout(() => {
+      setShow(false);
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeId);
+    };
+  }, [show]);
+
+  if (!show) {
+    return null;
+  }
+
+  // If show is true this will be returned
   return (
     <div
       className="flex bg-blue-100 rounded-lg p-4 mb-4 text-sm text-blue-700"
