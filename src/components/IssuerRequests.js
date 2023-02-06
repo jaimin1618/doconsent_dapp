@@ -36,7 +36,7 @@ const IssuerRequests = () => {
 
     const get_promises = async () => {
       const idx = await get_indexes();
-      console.log(idx);
+      // console.log(idx);
       const _requests = await idx.map(async (el, index) => {
         return await Contract.getRequestByID(el);
       });
@@ -45,7 +45,7 @@ const IssuerRequests = () => {
 
     const get_requests = async () => {
       const results = await get_promises();
-      console.log(results);
+      // console.log(results);
       setRequests(results);
     };
 

@@ -1,11 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import "./styles/modalStyles.css";
 
 const Modal = ({ modalContent, setIsModalOpen, isModalOpen }) => {
-  const openModal = () => {
-    console.log("clicked");
-    setIsModalOpen(true);
-  };
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -20,7 +16,7 @@ const Modal = ({ modalContent, setIsModalOpen, isModalOpen }) => {
         } justify-center items-center animated fadeIn faster`}
         style={{ background: "rbga(0, 0, 0, 0.7)" }}
       >
-        <div className="border border-teal-500 shadow-lg modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+        <div className="border border-teal-500 modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
           <div className="modal-content py-4 text-left px-6">
             <div className="flex justify-between items-center pb-3">
               <p className="text-2xl font-bold">{modalContent.dataName}</p>

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 // import VisibilityIcon from "@mui/icons-material/Visibility";
 // import DeleteIcon from "@mui/icons-material/Delete";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import DataObjectIcon from "@mui/icons-material/DataObject";
 import Contract from "./utilities/contract/contract";
 import { toast } from "react-toastify";
 

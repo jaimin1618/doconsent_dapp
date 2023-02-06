@@ -26,12 +26,12 @@ const App = () => {
   useEffect(() => {
     const setUserRole = async () => {
       const user_address = await Contract.getAddress();
-      setUserAccount(userAccount);
+      setUserAccount(user_address);
       const isIssuer = await Contract.isCurrentUserIssuer(user_address);
       isIssuer ? setRole(ROLES.ISSUER) : setRole(ROLES.HOLDER);
     };
     setUserRole();
-  }, []);
+  }, [userAccount]);
 
   return (
     <Router>

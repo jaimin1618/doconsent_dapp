@@ -44,15 +44,15 @@ const Upload = () => {
         >
           <span className="font-bold">Data name</span>
         </label>
-        <div className="relative mb-6 -z-10 w-full">
+        <div className="relative mb-6 w-full">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <PublishIcon />
           </div>
           <input
             type="text"
-            id="input-group-1"
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Enter data name"
+            value={dataName}
             onChange={(e) => setDataName(e.target.value)}
           />
         </div>
@@ -62,6 +62,7 @@ const Upload = () => {
           cols="40"
           className="w-full h-full resize rounded-md bg-sky-100 p-2"
           placeholder="Enter data content"
+          value={content}
           onChange={(e) => setContent(e.target.value)}
         ></textarea>
         <button

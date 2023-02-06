@@ -33,7 +33,7 @@ const VerifyAccessData = () => {
       toast("Data approved successfully");
     }
     const results = accessData.filter(
-      (item) => item.user_data_id != el.user_data_id
+      (item) => item.user_data_id !== el.user_data_id
     );
     setAccessData(results);
   };
@@ -82,13 +82,13 @@ const VerifyAccessData = () => {
         }
       });
 
-      promises.filter((el) => el != undefined);
+      promises.filter((el) => el !== undefined);
       return Promise.all(promises);
     };
 
     const get_data_promises = async () => {
       const _data_indexes = await get_data_indexes();
-      const _indexes = _data_indexes.filter((el) => el != undefined);
+      const _indexes = _data_indexes.filter((el) => el !== undefined);
       console.log("data indexes", _indexes);
       // requested_data_id
       const data = await _indexes.map(async (el, index) => {

@@ -31,7 +31,7 @@ const ShowData = () => {
       toast("Data deleted successfully");
     }
 
-    const _cards = cards.filter((el) => el.user_data_id != id);
+    const _cards = cards.filter((el) => el.user_data_id !== id);
     setCards(_cards);
   };
 
@@ -52,7 +52,6 @@ const ShowData = () => {
 
     const get_data = async () => {
       const results = await get_promises();
-      const { user_data_cid } = results;
       setCards(results);
     };
 

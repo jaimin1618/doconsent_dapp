@@ -7,8 +7,7 @@ const ABI = { abi: _abi };
 async function requestAccounts() {
   if (window.ethereum) {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const accounts = await provider.send("eth_requestAccounts", []);
-    // console.log(accounts);
+    await provider.send("eth_requestAccounts", []);
     return provider.getSigner();
   } else {
     alert("Install Metamask Wallet to run the application");
@@ -194,7 +193,7 @@ async function checkConsent(data_id, user_address) {
   return data;
 }
 
-export default {
+const _ = {
   requestAccounts,
   getOwner,
   insertUserData,
@@ -214,3 +213,5 @@ export default {
   issuerDataVerification,
   checkConsent,
 };
+
+export default _;
