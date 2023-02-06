@@ -1,6 +1,7 @@
 import { create } from "ipfs-http-client";
 const environment = process.env.REACT_APP_ENVIRONMENT;
 
+console.log(environment);
 const node =
   environment === "development"
     ? create(process.env.REACT_APP_LOCAL_IPFS_NODE)
@@ -19,7 +20,6 @@ async function upload_data(data) {
 async function read_data(cid) {
   if (cid === "" || cid === null) {
     throw Error("found empty CID for data read");
-    
   }
   const decoder = new TextDecoder();
   const stream = await node.cat(cid);
