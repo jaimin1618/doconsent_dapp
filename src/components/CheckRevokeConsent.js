@@ -40,7 +40,7 @@ const CheckRevokeConcent = () => {
     const get_data = async () => {
       const _results = await get_promises();
       const results = _results.filter(
-        (el) => parseInt(el.data_verification_stage, 10) != 1
+        (el) => parseInt(el.data_verification_stage, 10) !== 1
       );
       return results;
     };
@@ -108,8 +108,8 @@ const CheckRevokeConcent = () => {
                     >
                       <div className="flex  w-2/3 items-center justify-start">
                         <img
+                          alt=""
                           className="h-12 rounded-full"
-                          alt="Use any sample image here..."
                           src="https://tailwindcomponents.com/storage/avatars/baG0wMQUtoTOZOOmStaUBVQsa7LAwc5HjiGZMjdB.png"
                         />
                         <p className="mx-2 text-gray-500 text-sm">{address}</p>
