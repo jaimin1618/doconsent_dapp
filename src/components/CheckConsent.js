@@ -16,7 +16,7 @@ const CheckConsent = () => {
       selectedOption,
       recipientAddress
     );
-    if (status == true) {
+    if (status === true) {
       setShowInfoAlert(true);
     } else {
       setShowWarningAlert(true);
