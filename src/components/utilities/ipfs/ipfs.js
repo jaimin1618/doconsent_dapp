@@ -19,6 +19,7 @@ async function upload_data(data) {
 async function read_data(cid) {
   if (cid === "" || cid === null) {
     throw Error("found empty CID for data read");
+    
   }
   const decoder = new TextDecoder();
   const stream = await node.cat(cid);

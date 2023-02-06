@@ -13,11 +13,11 @@ const FulfilledRequests = () => {
   const [requests, setRequests] = useState([]);
 
   const displayStatusIcon = (status) => {
-    if (status == 0) {
+    if (status === 0) {
       return <PendingActionsIcon className="text-blue-600" />;
-    } else if (status == 1) {
+    } else if (status === 1) {
       return <CheckBoxIcon className="text-green-700" />;
-    } else if (status == 2) {
+    } else if (status === 2) {
       return <CancelIcon className="text-red-500" />;
     }
   };
@@ -62,19 +62,19 @@ const FulfilledRequests = () => {
 
     const get_requests = async () => {
       const results = await get_promises();
-      if (filter == RequestFilter.ALL) {
+      if (filter === RequestFilter.ALL) {
         setRequests(results);
-      } else if (filter == RequestFilter.ACCEPTED_OR_REJECTED) {
+      } else if (filter === RequestFilter.ACCEPTED_OR_REJECTED) {
         const filtered_results = results.filter(
           (el) =>
-            el.request_status == RequestFilterIndex[RequestFilter.ACCEPTED] ||
-            el.request_status == RequestFilterIndex[RequestFilter.REJECTED]
+            el.request_status === RequestFilterIndex[RequestFilter.ACCEPTED] ||
+            el.request_status === RequestFilterIndex[RequestFilter.REJECTED]
         );
         console.log(filtered_results);
         setRequests(filtered_results);
       } else {
         const filtered_results = results.filter(
-          (el) => el.request_status == RequestFilterIndex[filter]
+          (el) => el.request_status === RequestFilterIndex[filter]
         );
         console.log(filtered_results);
         setRequests(filtered_results);

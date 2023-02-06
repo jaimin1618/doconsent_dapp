@@ -3,30 +3,27 @@ import Logo from "../media/Logo.png";
 import { ROLES } from "../constants";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import PersonIcon from "@mui/icons-material/Person";
-import WifiIcon from "@mui/icons-material/Wifi";
-import WifiOffIcon from "@mui/icons-material/WifiOff";
-import Contract from "./utilities/contract/contract";
 
 const Header = ({ user_role }) => {
   const [navigation, setNavigation] = useState([]);
-  
-  const holderNavigation = [
-    { path: "upload", linkName: "Upload data" },
-    { path: "mydata", linkName: "My Data" },
-    { path: "issuer_requests", linkName: "Issuer requests" },
-    { path: "give_consent", linkName: "Give consent" },
-    { path: "remoke_consent", linkName: "Check/Revoke consent" },
-  ];
-
-  const issuerNavigation = [
-    { path: "make_request", linkName: "Make Request" },
-    { path: "fulfilled_requests", linkName: "Requests" },
-    { path: "my_permissioned_data", linkName: "Permissioned data" },
-    // { path: "validate_data", linkName: "Validate-Data" },
-  ];
 
   useEffect(() => {
-    user_role == ROLES.ISSUER
+    const holderNavigation = [
+      { path: "upload", linkName: "Upload data" },
+      { path: "mydata", linkName: "My Data" },
+      { path: "issuer_requests", linkName: "Issuer requests" },
+      { path: "give_consent", linkName: "Give consent" },
+      { path: "remoke_consent", linkName: "Check/Revoke consent" },
+    ];
+
+    const issuerNavigation = [
+      { path: "make_request", linkName: "Make Request" },
+      { path: "fulfilled_requests", linkName: "Requests" },
+      { path: "my_permissioned_data", linkName: "Permissioned data" },
+      // { path: "validate_data", linkName: "Validate-Data" },
+    ];
+
+    user_role === ROLES.ISSUER
       ? setNavigation(issuerNavigation)
       : setNavigation(holderNavigation);
   }, [user_role]);
