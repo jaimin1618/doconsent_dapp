@@ -13,8 +13,6 @@ const Upload = () => {
       data_name: dataName,
       data_content: content,
     });
-    // QmZ8JpGAhjWPZDKWrXdYUf3qXaLhyE8KtcPGxiWfBrpYSr
-    // QmbXyERFS1P7r7HoDgK6k5v4wTLewP96P7eSaJsCYFf38b
     return _cid;
   };
 
@@ -36,14 +34,17 @@ const Upload = () => {
 
   return (
     <div className="h-screen w-full flex justify-center items-center">
-      <div className="w-1/3 p-2">
+      <div className="py-4 px-20 w-full">
+        <div className="outline outlie-2 rounded-sm flex justify-center items-center font-bold py-3 px-2 mb-1">
+          Data uploading panel
+        </div>
         <label
           htmlFor="input-group-1"
-          className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          className="block my-2 text-sm font-medium text-gray-900 dark:text-gray-300"
         >
-          Data Name
+          <span className="font-bold">Data name</span>
         </label>
-        <div className="relative mb-6">
+        <div className="relative mb-6 -z-10 w-full">
           <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <PublishIcon />
           </div>
@@ -65,7 +66,7 @@ const Upload = () => {
         ></textarea>
         <button
           onClick={() => run_upload()}
-          className="block uppercase mx-auto shadow bg-indigo-800 hover:bg-indigo-700 focus:shadow-outline focus:outline-none text-white text-xs py-3 px-10 rounded"
+          className="w-1/2 my-5 block uppercase mx-auto shadow bg-indigo-800 hover:bg-indigo-700 focus:shadow-outline focus:outline-none text-white text-xs py-3 px-10 rounded"
         >
           Upload
         </button>

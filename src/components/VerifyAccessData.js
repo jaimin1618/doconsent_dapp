@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import DataObjectIcon from "@mui/icons-material/DataObject";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
+import CancelIcon from "@mui/icons-material/Cancel";
 import { toast } from "react-toastify";
 
 import Modal from "./Modal";
@@ -21,13 +22,39 @@ const VerifyAccessData = () => {
     setIsModalOpen(true);
   };
 
-  const verify_data = async (el) => {};
+  const approve_data = async (el) => {
+    const status = await Contract.issuerDataVerification(
+      parseInt(el.user_data_id, 10),
+      1
+    );
+    if (!status) {
+      toast("Data approval failed due to some reasons, Try again later");
+    } else {
+      toast("Data approved successfully");
+    }
+    const results = accessData.filter(
+      (item) => item.user_data_id != el.user_data_id
+    );
+    setAccessData(results);
+  };
+
+  const reject_data = async (el) => {
+    const status = await Contract.issuerDataVerification(
+      parseInt(el.user_data_id, 10),
+      2
+    );
+    if (!status) {
+      toast("Data rejection failed due to some reasons, Try again later");
+    } else {
+      toast("Data rejected successfully approved successfully");
+    }
+  };
 
   useEffect(() => {
     const get_indexes = async () => {
       const raw = await Contract.getRequestsMadeByCurrentUser();
       const idx = raw.map((el) => parseInt(el, 10));
-      console.log(idx);
+
       return idx;
     };
 
@@ -42,24 +69,38 @@ const VerifyAccessData = () => {
     const get_data_indexes = async () => {
       const results = await get_request_promises();
       const filtered_requests = results.filter((el) => el.request_status === 1);
-      console.log(filtered_requests);
       const idx = filtered_requests.map((el) => el.requested_data_id);
       const data_indexes = idx.map((el) => parseInt(el, 10));
       console.log(data_indexes);
-      return data_indexes;
+
+      const promises = data_indexes.map(async (el, index) => {
+        const addr = await Contract.getAddress();
+        console.log(addr);
+        const isConsent = await Contract.checkConsent(el, addr);
+        if (isConsent === true) {
+          return el;
+        }
+      });
+
+      promises.filter((el) => el != undefined);
+      return Promise.all(promises);
     };
 
     const get_data_promises = async () => {
       const _data_indexes = await get_data_indexes();
+      const _indexes = _data_indexes.filter((el) => el != undefined);
+      console.log("data indexes", _indexes);
       // requested_data_id
-      const data = await _data_indexes.map(async (el, index) => {
+      const data = await _indexes.map(async (el, index) => {
         return await Contract.getUserDataByID(el);
       });
+
       return await Promise.all(data);
     };
 
     const getAccessData = async () => {
       const results = await get_data_promises();
+      console.log(results);
       setAccessData(results);
     };
 
@@ -96,7 +137,10 @@ const VerifyAccessData = () => {
                     <VisibilityIcon onClick={() => display_data(el)} />
                   </button>
                   <button className="flex justify-around text-green-900 bg-slate-100 p-2 rounded-sm">
-                    <DoneOutlineIcon onClick={() => verify_data(el)} />
+                    <DoneOutlineIcon onClick={() => approve_data(el)} />
+                  </button>
+                  <button className="flex justify-around text-red-900 bg-slate-100 p-2 rounded-sm">
+                    <CancelIcon onClick={() => reject_data(el)} />
                   </button>
                 </div>
               </div>

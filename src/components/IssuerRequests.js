@@ -55,7 +55,7 @@ const IssuerRequests = () => {
   return (
     <div>
       <div className="flex items-start justify-center  bg-sky-100 h-screen  p-6">
-        <div className="flex flex-col border-gray-300 border bg-white divide-y rounded-lg flex-none w-full md:w-1/2 lg:w-1/2">
+        <div className="flex flex-col border-gray-300 border bg-white divide-y rounded-lg flex-none w-full">
           <div className="flex flex-col space-y-2 divide-y">
             {/* SHOW REQUESTS */}
             {requests.map((el, idx) => (

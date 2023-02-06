@@ -171,6 +171,28 @@ async function getConsentGivenListByDataId(data_id) {
   return data;
 }
 
+async function issuerDataVerification(data_id, verification_status) {
+  let status = false;
+  try {
+    const signer = await requestAccounts();
+    const contract = new ethers.Contract(address, ABI.abi, signer);
+    const tx = await contract.issuerVerification(data_id, verification_status);
+    status = await tx.wait();
+    if (!status) status = false;
+  } catch (e) {
+    console.error("Error occured: ", e);
+    status = false;
+  }
+  return status;
+}
+
+async function checkConsent(data_id, user_address) {
+  const signer = await requestAccounts();
+  const contract = new ethers.Contract(address, ABI.abi, signer);
+  const data = await contract.check_consent(data_id, user_address);
+  return data;
+}
+
 export default {
   requestAccounts,
   getOwner,
@@ -188,4 +210,6 @@ export default {
   giveConsent,
   removeConsent,
   getConsentGivenListByDataId,
+  issuerDataVerification,
+  checkConsent,
 };

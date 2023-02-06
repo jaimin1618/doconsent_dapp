@@ -1,18 +1,12 @@
 import React from "react";
-import Banner from "../media/Banner.jpg";
 import Contract from "./utilities/contract/contract";
 
 const Main = () => {
   return (
-    <div className="bg-white dark:bg-gray-900">
+    <div className="bg-white dark:bg-gray-900 h-screen">
       <div className="flex justify-center h-screen">
         <div
           className="hidden bg-cover lg:block lg:w-2/3"
-          //   style="background-image:
-          //   style={{
-          //     backgroundImage:
-          //       "url('https://images.unsplash.com/photo-1616763355603-9755a640a287?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80')",
-          //   }}
           style={{
             backgroundImage: "url('/media/Banner.jpg')",
           }}

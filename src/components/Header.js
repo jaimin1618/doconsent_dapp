@@ -10,17 +10,17 @@ import Contract from "./utilities/contract/contract";
 const Header = ({ user_role }) => {
   const [navigation, setNavigation] = useState([]);
   const holderNavigation = [
-    { path: "upload", linkName: "Upload" },
-    { path: "mydata", linkName: "MyData" },
-    { path: "issuer_requests", linkName: "Issuer-Requests" },
-    { path: "give_consent", linkName: "Give-Consent" },
-    { path: "remoke_consent", linkName: "Revoke-Consent" },
+    { path: "upload", linkName: "Upload data" },
+    { path: "mydata", linkName: "My Data" },
+    { path: "issuer_requests", linkName: "Issuer requests" },
+    { path: "give_consent", linkName: "Give consent" },
+    { path: "remoke_consent", linkName: "Check/Revoke consent" },
   ];
 
   const issuerNavigation = [
-    { path: "make_request", linkName: "Make-Request" },
-    { path: "fulfilled_requests", linkName: "Fulfilled-Requests" },
-    { path: "my_permissioned_data", linkName: "Access-Data" },
+    { path: "make_request", linkName: "Make Request" },
+    { path: "fulfilled_requests", linkName: "Requests" },
+    { path: "my_permissioned_data", linkName: "Permissioned data" },
     // { path: "validate_data", linkName: "Validate-Data" },
   ];
 
@@ -32,13 +32,13 @@ const Header = ({ user_role }) => {
 
   return (
     <header className="header sticky top-0 bg-sky-800 text-white shadow-sm flex items-center justify-between px-8 py-02">
-      <h1 className="w-3/12">
+      <h1 className="w-3/12 mx-5">
         <a href="/">
           <img className="bg-white rounded-md m-2" src={Logo} />
         </a>
       </h1>
 
-      <nav className="nav font-semibold text-sm">
+      <nav className="nav font-semibold text-sm underline underline-offset-4">
         <ul className="flex items-center">
           {navigation.map((el, index) => (
             <li
