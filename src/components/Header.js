@@ -32,7 +32,7 @@ const Header = ({ user_role }) => {
     <header className="header sticky top-0 bg-sky-800 text-white shadow-sm flex items-center justify-between px-8 py-02">
       <h1 className="w-3/12 mx-5">
         <a href="/">
-          <img className="bg-white rounded-md m-2" src={Logo} />
+          <img className="bg-white rounded-md m-2" alt="" src={Logo} />
         </a>
       </h1>
 
@@ -54,7 +54,7 @@ const Header = ({ user_role }) => {
           href="verifier_status"
           className="text-lg font-bold flex items-center px-5"
         >
-          {user_role == ROLES.ISSUER ? (
+          {user_role === ROLES.ISSUER ? (
             <AdminPanelSettingsIcon className="mx-1" />
           ) : (
             <PersonIcon className="mx-1" />
