@@ -1,15 +1,6 @@
 import { create } from "ipfs-http-client";
 const environment = process.env.REACT_APP_ENVIRONMENT;
-
-const node =
-  environment === "development"
-    ? create(process.env.REACT_APP_LOCAL_IPFS_NODE)
-    : create();
-
-/** Run below scripts to run local IPFS node on your machine
- * npm install -g ipfs
- * jsipfs daemon
- */
+const node = create("http://127.0.0.1:5002");
 
 async function upload_data(data) {
   const file = await node.add(JSON.stringify(data));
