@@ -1,5 +1,4 @@
 import { create } from "ipfs-http-client";
-const environment = process.env.REACT_APP_ENVIRONMENT;
 const node = create("http://127.0.0.1:5002");
 
 async function upload_data(data) {

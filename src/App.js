@@ -19,6 +19,7 @@ import Contract from "../src/components/utilities/contract/contract";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import FileUpload from "./components/FileUpload";
+import Sidebar from "./components/Sidebar";
 
 const App = () => {
   const [role, setRole] = useState(ROLES.HOLDER);
@@ -36,26 +37,31 @@ const App = () => {
 
   return (
     <Router>
-      <div>
-        <Header user_role={role} />
+      <div className="flex">
+        <Sidebar user_role={role} />
         <ToastContainer />
-        <Routes>
-          {/* HOLDER Routes  */}
-          <Route path="/" element={<Main />} />
-          <Route path="/mydata" element={<ShowData />} />
-          <Route path="/issuer_requests" element={<IssuerRequests />} />
-          <Route path="/give_consent" element={<GiveConsent />} />
-          <Route path="/remoke_consent" element={<CheckRevokeConsent />} />
-          <Route path="/verifier_status" element={<VerifierStatus />} />
-          <Route path="/document_upload" element={<FileUpload />} />
+        <div className="w-full ml-[3.30rem]">
+          <Routes>
+            {/* HOLDER Routes  */}
+            <Route path="/" element={<Main />} />
+            <Route path="/mydata" element={<ShowData />} />
+            <Route path="/issuer_requests" element={<IssuerRequests />} />
+            <Route path="/give_consent" element={<GiveConsent />} />
+            <Route path="/remoke_consent" element={<CheckRevokeConsent />} />
+            <Route path="/verifier_status" element={<VerifierStatus />} />
+            <Route path="/document_upload" element={<FileUpload />} />
 
-          {/* ISSUER Routes  */}
-          <Route path="/my_permissioned_data" element={<VerifyAccessData />} />
-          <Route path="/make_request" element={<MakeRequest />} />
-          <Route path="/fulfilled_requests" element={<FulfilledRequests />} />
-          <Route path="/*" element={<PageNotFound />} />
-        </Routes>
-        <Footer />
+            {/* ISSUER Routes  */}
+            <Route
+              path="/my_permissioned_data"
+              element={<VerifyAccessData />}
+            />
+            <Route path="/make_request" element={<MakeRequest />} />
+            <Route path="/fulfilled_requests" element={<FulfilledRequests />} />
+            <Route path="/*" element={<PageNotFound />} />
+          </Routes>
+          {/* <Footer /> */}
+        </div>
       </div>
     </Router>
   );

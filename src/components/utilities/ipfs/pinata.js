@@ -34,11 +34,6 @@ async function pin_file(formData) {
   }
 }
 
-async function getFileByCid(cid) {
-  
-  // using PINATA public gateways to retrieve files
-}
-
 async function unpin_file(cid) {
   var config = {
     method: "delete",

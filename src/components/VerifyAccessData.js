@@ -8,7 +8,7 @@ import { ColorRing } from "react-loader-spinner";
 
 import Modal from "./Modal";
 import Contract from "./utilities/contract/contract";
-import IPFS from "./utilities/ipfs/ipfs";
+// import IPFS from "./utilities/ipfs/ipfs";
 
 const VerifyAccessData = () => {
   const [accessData, setAccessData] = useState([]);
