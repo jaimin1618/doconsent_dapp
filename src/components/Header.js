@@ -3,13 +3,14 @@ import Logo from "../media/Logo.png";
 import { ROLES } from "../constants";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import PersonIcon from "@mui/icons-material/Person";
+import { useNavigate } from "react-router";
 
 const Header = ({ user_role }) => {
   const [navigation, setNavigation] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const holderNavigation = [
-      { path: "upload", linkName: "Upload data" },
       { path: "document_upload", linkName: "Upload document" },
       { path: "mydata", linkName: "My Data" },
       { path: "issuer_requests", linkName: "Issuer requests" },
@@ -30,21 +31,22 @@ const Header = ({ user_role }) => {
   }, [user_role]);
 
   return (
-    <header className="header sticky top-0 bg-sky-800 text-white shadow-sm flex items-center justify-between px-8 py-02">
-      <h1 className="w-3/12 mx-5">
-        <a href="/">
+    <header className="z-10 header w-full sticky top-0 bg-sky-800 text-white shadow-sm flex items-center justify-between px-8 py-02">
+      <h1 onClick={() => navigate("/")} className="w-4/12 mx-5">
+        <button className="w-full">
           <img className="bg-white rounded-md m-2" src={Logo} />
-        </a>
+        </button>
       </h1>
 
       <nav className="nav font-semibold text-sm underline underline-offset-4">
         <ul className="flex items-center">
           {navigation.map((el, index) => (
             <li
+              onClick={() => navigate(el.path)}
               key={index}
               className="p-4 border-b-2 border-green-500 border-opacity-0 hover:border-opacity-100 hover:text-green-500 duration-200 cursor-pointer"
             >
-              <a href={el.path}>{el.linkName}</a>
+              <a>{el.linkName}</a>
             </li>
           ))}
         </ul>

@@ -3,7 +3,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Upload from "./components/Upload";
 import ShowData from "./components/ShowData";
 import GiveConsent from "./components/GiveConsent";
 import VerifierStatus from "./components/VerifierStatus";
@@ -13,6 +12,7 @@ import FulfilledRequests from "./components/FulfilledRequests";
 import VerifyAccessData from "./components/VerifyAccessData";
 import Main from "./components/Main";
 import CheckRevokeConsent from "./components/CheckRevokeConsent";
+import PageNotFound from "./components/PageNotFound";
 
 import { ROLES } from "./constants";
 import Contract from "../src/components/utilities/contract/contract";
@@ -42,7 +42,6 @@ const App = () => {
         <Routes>
           {/* HOLDER Routes  */}
           <Route path="/" element={<Main />} />
-          <Route path="/upload" element={<Upload />} />
           <Route path="/mydata" element={<ShowData />} />
           <Route path="/issuer_requests" element={<IssuerRequests />} />
           <Route path="/give_consent" element={<GiveConsent />} />
@@ -54,6 +53,7 @@ const App = () => {
           <Route path="/my_permissioned_data" element={<VerifyAccessData />} />
           <Route path="/make_request" element={<MakeRequest />} />
           <Route path="/fulfilled_requests" element={<FulfilledRequests />} />
+          <Route path="/*" element={<PageNotFound />} />
         </Routes>
         <Footer />
       </div>
