@@ -53,7 +53,7 @@ const CheckConsent = () => {
   }, []);
 
   return (
-    <div className="w-full p-4">
+    <div className="w-full sm:p-4">
       <div className="p-8 rounded-xl shadow-md bg-white">
         <div className="mb-5">
           <label

@@ -1,18 +1,5 @@
-import { create } from "ipfs";
-
-function randomInt(start, end) {
-  return Math.floor(Math.random() * (end - start + 1) + start);
-}
-
-var ready = false;
-async function getNode(config) {
-  if (!ready) {
-    const node = await create(config);
-    ready = true;
-    return node;
-  }
-  return null;
-}
+import { create } from "ipfs-http-client";
+const node = create("http://127.0.0.1:5002");
 
 async function upload_data(data) {
   const node = await getNode({ repo: "ok" + Math.random() });

@@ -4,6 +4,7 @@ import Contract from "./utilities/contract/contract";
 
 const IssuerRequests = () => {
   const [requests, setRequests] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const approve_request = async (request_id) => {
     const status = await Contract.fulfillIssuerRequest(request_id, 1);
@@ -47,6 +48,7 @@ const IssuerRequests = () => {
       const results = await get_promises();
       // console.log(results);
       setRequests(results);
+      setIsLoading(true);
     };
 
     get_requests();
