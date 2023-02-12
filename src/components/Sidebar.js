@@ -5,10 +5,12 @@ import FolderIcon from "@mui/icons-material/Folder";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import FlakyIcon from "@mui/icons-material/Flaky";
+import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
+import FactCheckIcon from "@mui/icons-material/FactCheck";
+import FolderSpecialIcon from "@mui/icons-material/FolderSpecial";
 import { useNavigate } from "react-router";
 import { ROLES } from "../constants";
 import Logo from "../media/Logo.png";
-import MainLogo from "../media/MainLogo.png";
 
 const Sidebar = ({ user_role }) => {
   const [navigation, setNavigation] = useState([]);
@@ -40,9 +42,21 @@ const Sidebar = ({ user_role }) => {
     ];
 
     const issuerNavigation = [
-      { path: "make_request", linkName: "Make Request" },
-      { path: "fulfilled_requests", linkName: "Requests" },
-      { path: "my_permissioned_data", linkName: "Permissioned data" },
+      {
+        path: "make_request",
+        linkName: "Make Request",
+        element: <ConnectWithoutContactIcon />,
+      },
+      {
+        path: "fulfilled_requests",
+        linkName: "Requests",
+        element: <FactCheckIcon />,
+      },
+      {
+        path: "my_permissioned_data",
+        linkName: "Permissioned data",
+        element: <FolderSpecialIcon />,
+      },
       // { path: "validate_data", linkName: "Validate-Data" },
     ];
 
