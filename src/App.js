@@ -18,6 +18,7 @@ import { ROLES } from "./constants";
 import Contract from "../src/components/utilities/contract/contract";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import FileUpload from "./components/FileUpload";
 
 const App = () => {
   const [role, setRole] = useState(ROLES.HOLDER);
@@ -47,6 +48,7 @@ const App = () => {
           <Route path="/give_consent" element={<GiveConsent />} />
           <Route path="/remoke_consent" element={<CheckRevokeConsent />} />
           <Route path="/verifier_status" element={<VerifierStatus />} />
+          <Route path="/document_upload" element={<FileUpload />} />
 
           {/* ISSUER Routes  */}
           <Route path="/my_permissioned_data" element={<VerifyAccessData />} />

@@ -10,6 +10,7 @@ const Header = ({ user_role }) => {
   useEffect(() => {
     const holderNavigation = [
       { path: "upload", linkName: "Upload data" },
+      { path: "document_upload", linkName: "Upload document" },
       { path: "mydata", linkName: "My Data" },
       { path: "issuer_requests", linkName: "Issuer requests" },
       { path: "give_consent", linkName: "Give consent" },
