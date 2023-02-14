@@ -11,7 +11,6 @@ import Modal from "./Modal";
 import Contract from "./utilities/contract/contract";
 import pinata from "../../src/components/utilities/ipfs/pinata";
 import { ColorRing } from "react-loader-spinner";
-import axios from "axios";
 
 const ShowData = () => {
   const [cards, setCards] = useState([]);
@@ -28,8 +27,9 @@ const ShowData = () => {
   const delete_data = async (el) => {
     const id = el.user_data_id;
     const cid = el.user_data_cid;
+    console.log(id, cid);
 
-    const status = await Contract.removeUserData(id);
+    const status = await Contract.removeUserData(parseInt(id, 10));
     if (status) {
       // remove from IPFS
       const res = await pinata.unpin_file(cid);
@@ -38,14 +38,14 @@ const ShowData = () => {
       } else {
         toast("Data deleted successfully");
       }
+
+      const _cards = cards.filter((el) => el.user_data_id !== id);
+      setCards(_cards);
     } else {
       toast(
         "Data delete failed due to some error with blockchain network, Try again later"
       );
     }
-
-    const _cards = cards.filter((el) => el.user_data_id !== id);
-    setCards(_cards);
   };
 
   useEffect(() => {
