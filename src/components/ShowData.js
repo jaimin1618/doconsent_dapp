@@ -29,23 +29,16 @@ const ShowData = () => {
     const cid = el.user_data_cid;
 
     const status = await Contract.removeUserData(id);
-    console.log(status);
     if (status) {
-      // remove from IPFS
-      const res = await pinata.unpin_file(cid);
-      if (!res) {
-        toast("Data delete successfully from blockchain but NOT from IPFS");
-      } else {
-        toast("Data deleted successfully");
-      }
+      toast("Data deleted successfully");
+
+      const _cards = cards.filter((el) => el.user_data_id !== id);
+      setCards(_cards);
     } else {
       toast(
         "Data delete failed due to some error with blockchain network, Try again later"
       );
     }
-    
-    const _cards = cards.filter((el) => el.user_data_id !== id);
-    setCards(_cards);
   };
 
   useEffect(() => {

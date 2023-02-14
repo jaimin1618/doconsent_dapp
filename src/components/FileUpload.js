@@ -9,8 +9,6 @@ function FileUploadMultiple() {
   const [dataName, setDataName] = useState(""); // dataName is FileName
   const [file, setFile] = useState();
 
-  useEffect(() => {}, []);
-
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
     console.log("uploaded file name: ", e.target.files[0].name);
