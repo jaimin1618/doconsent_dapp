@@ -18,7 +18,7 @@ const MakeRequest = () => {
 
   return (
     <div className="h-screen flex justify-center items-center">
-      <div className="max-w-2xl mx-auto">
+      <div className="w-1/3 mx-auto">
         <div className="font-bold mb-4 underline w-full text-lg">
           Provide Request details
         </div>

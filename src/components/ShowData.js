@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+import AttachmentIcon from "@mui/icons-material/Attachment";
 import DeleteIcon from "@mui/icons-material/Delete";
-import DataObjectIcon from "@mui/icons-material/DataObject";
+import DescriptionIcon from "@mui/icons-material/Description";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import CancelIcon from "@mui/icons-material/Cancel";
+// import DownloadIcon from "@mui/icons-material/Download";
 import { toast } from "react-toastify";
 
 import Modal from "./Modal";
@@ -20,16 +21,15 @@ const ShowData = () => {
   const display_data = async (el) => {
     const cid = el.user_data_cid;
     const location = process.env.REACT_APP_IPFS_PUBLIC_GATEWAY + cid;
-    console.log(location);
     window.location.href = location;
   };
 
   const delete_data = async (el) => {
     const id = el.user_data_id;
     const cid = el.user_data_cid;
+    console.log(id, cid);
 
-    const status = await Contract.removeUserData(id);
-    console.log(status);
+    const status = await Contract.removeUserData(parseInt(id, 10));
     if (status) {
       // remove from IPFS
       const res = await pinata.unpin_file(cid);
@@ -38,14 +38,14 @@ const ShowData = () => {
       } else {
         toast("Data deleted successfully");
       }
+
+      const _cards = cards.filter((el) => el.user_data_id !== id);
+      setCards(_cards);
     } else {
       toast(
         "Data delete failed due to some error with blockchain network, Try again later"
       );
     }
-    
-    const _cards = cards.filter((el) => el.user_data_id !== id);
-    setCards(_cards);
   };
 
   useEffect(() => {
@@ -66,7 +66,6 @@ const ShowData = () => {
     const get_data = async () => {
       const results = await get_promises();
       setCards(results);
-      console.log(results);
       setIsLoading(false);
     };
 
@@ -112,18 +111,22 @@ const ShowData = () => {
             return (
               <div
                 key={idx}
-                className="relative flex items-center p-2 bg-white border-2 border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 hover:bg-slate-2 hover:bg-slate-200"
+                className="relative items-center p-2 bg-white border-2 border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 hover:bg-slate-2 hover:bg-slate-200 flex"
               >
-                <div className="p-3 mr-4 bg-blue-500  text-white rounded-full">
-                  <DataObjectIcon />
+                <div className="p-1 mr-2 bg-blue-500  text-white rounded-full">
+                  <DescriptionIcon />
                 </div>
-                <div className="w-full h-full flex justify-around items-center">
-                  <p className="font-bold text-xs text-gray-100 w-1/2 bg-cyan-700 h-full flex items-center justify-center rounded-sm">
-                    {el.user_data_name.slice(0, 15)}...
+                <div className="w-full h-full flex justify-start items-center">
+                  <p className="font-bold text-xs text-gray-100 w-2/3 bg-cyan-700 h-full flex items-center justify-start pl-1 rounded-sm">
+                    [{parseInt(el.user_data_id, 10)}]
+                    {el.user_data_name.slice(0, 12)}...
                   </p>
                   <div className="flex justify-evenly h-full w-1/2 items-center">
-                    <button className="flex justify-around text-green-800 bg-slate-100 p-2 rounded-sm">
-                      <VisibilityIcon onClick={() => display_data(el)} />
+                    <button
+                      onClick={() => display_data(el)}
+                      className="flex justify-around text-green-800 bg-slate-100 p-2 rounded-sm"
+                    >
+                      <AttachmentIcon />
                     </button>
                     <button
                       onClick={() => delete_data(el)}
@@ -133,15 +136,13 @@ const ShowData = () => {
                     </button>
                     <button>
                       {parseInt(el.data_verification_stage, 10) === 1 &&
-                      parseInt(el.issuer_verification_status, 10) === 1 ? (
-                        <VerifiedIcon className="absolute -top-2 -right-2 text-green-800" />
-                      ) : (
-                        ""
-                      )}
-                      {(parseInt(el.data_verification_stage, 10) === 1 &&
-                        parseInt(el.issuer_verification_status, 10) === 2) ?? (
-                        <CancelIcon className="absolute -top-2 -right-2 text-red-700" />
-                      )}
+                        parseInt(el.issuer_verification_status, 10) === 1 && (
+                          <VerifiedIcon className="absolute -top-2 -right-2 text-green-800" />
+                        )}
+                      {parseInt(el.data_verification_stage, 10) === 1 &&
+                        parseInt(el.issuer_verification_status, 10) === 2 && (
+                          <CancelIcon className="absolute -top-2 -right-2 text-red-700" />
+                        )}
                     </button>
                   </div>
                 </div>

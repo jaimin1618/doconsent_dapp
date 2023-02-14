@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 
-import Header from "./components/Header";
-import Footer from "./components/Footer";
 import ShowData from "./components/ShowData";
 import GiveConsent from "./components/GiveConsent";
 import VerifierStatus from "./components/VerifierStatus";
@@ -33,6 +31,18 @@ const App = () => {
       isIssuer ? setRole(ROLES.ISSUER) : setRole(ROLES.HOLDER);
     };
     setUserRole();
+
+    const onAccountChange = async (accounts) => {
+      console.log("Account changed");
+      setUserAccount(accounts[0]);
+      setUserRole();
+      console.log(userAccount);
+      console.log(role);
+    };
+    window.ethereum.on("accountsChanged", onAccountChange);
+
+    return () =>
+      window.ethereum.removeListener("accountsChanged", onAccountChange);
   }, [userAccount]);
 
   return (
@@ -42,25 +52,39 @@ const App = () => {
         <ToastContainer />
         <div className="w-full ml-[3.30rem]">
           <Routes>
-            {/* HOLDER Routes  */}
             <Route path="/" element={<Main />} />
-            <Route path="/mydata" element={<ShowData />} />
-            <Route path="/issuer_requests" element={<IssuerRequests />} />
-            <Route path="/give_consent" element={<GiveConsent />} />
-            <Route path="/remoke_consent" element={<CheckRevokeConsent />} />
-            <Route path="/verifier_status" element={<VerifierStatus />} />
-            <Route path="/document_upload" element={<FileUpload />} />
+            
+            {/* HOLDER Routes  */}
+            {role === ROLES.HOLDER ? (
+              <>
+                <Route path="/mydata" element={<ShowData />} />
+                <Route path="/issuer_requests" element={<IssuerRequests />} />
+                <Route path="/give_consent" element={<GiveConsent />} />
+                <Route
+                  path="/revoke_consent"
+                  element={<CheckRevokeConsent />}
+                />
+                <Route path="/verifier_status" element={<VerifierStatus />} />
+                <Route path="/document_upload" element={<FileUpload />} />
+              </>
+            ) : (
+              <>
+                {/* ISSUER Routes  */}
 
-            {/* ISSUER Routes  */}
-            <Route
-              path="/my_permissioned_data"
-              element={<VerifyAccessData />}
-            />
-            <Route path="/make_request" element={<MakeRequest />} />
-            <Route path="/fulfilled_requests" element={<FulfilledRequests />} />
+                <Route
+                  path="/my_permissioned_data"
+                  element={<VerifyAccessData />}
+                />
+                <Route path="/make_request" element={<MakeRequest />} />
+                <Route
+                  path="/fulfilled_requests"
+                  element={<FulfilledRequests />}
+                />
+                <Route path="/*" element={<PageNotFound />} />
+              </>
+            )}
             <Route path="/*" element={<PageNotFound />} />
           </Routes>
-          {/* <Footer /> */}
         </div>
       </div>
     </Router>
