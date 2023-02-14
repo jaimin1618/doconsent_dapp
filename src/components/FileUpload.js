@@ -41,14 +41,7 @@ function FileUploadMultiple() {
       toast("File Note Found, Select the file properly");
       return;
     }
-
     const cid = await uploadFile();
-    const location = process.env.REACT_APP_IPFS_PUBLIC_GATEWAY + cid;
-    const isExists = await urlExist(location);
-    if (isExists) {
-      toast("File already uploaded, Please change to file to upload");
-      return;
-    }
 
     const status = await Contract.insertUserData(dataName, cid);
     if (!status) {
