@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import PublishIcon from "@mui/icons-material/Publish";
 import { toast } from "react-toastify";
+import urlExist from "url-exist";
 
 import Contract from "../components/utilities/contract/contract";
 import pinata from "../../src/components/utilities/ipfs/pinata";
@@ -42,6 +43,13 @@ function FileUploadMultiple() {
     }
 
     const cid = await uploadFile();
+    const location = process.env.REACT_APP_IPFS_PUBLIC_GATEWAY + cid;
+    const isExists = await urlExist(location);
+    if (isExists) {
+      toast("File already uploaded, Please change to file to upload");
+      return;
+    }
+
     const status = await Contract.insertUserData(dataName, cid);
     if (!status) {
       toast("Error! file upload failed");

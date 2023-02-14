@@ -15,7 +15,7 @@ const Header = ({ user_role }) => {
       { path: "mydata", linkName: "My Data" },
       { path: "issuer_requests", linkName: "Issuer requests" },
       { path: "give_consent", linkName: "Give consent" },
-      { path: "remoke_consent", linkName: "Check/Revoke consent" },
+      { path: "revoke_consent", linkName: "Check/Revoke consent" },
     ];
 
     const issuerNavigation = [
