@@ -35,7 +35,7 @@ const Sidebar = ({ user_role }) => {
         element: <HowToRegIcon />,
       },
       {
-        path: "remoke_consent",
+        path: "revoke_consent",
         linkName: "Check/Revoke consent",
         element: <FlakyIcon />,
       },

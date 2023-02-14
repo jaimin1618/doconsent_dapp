@@ -61,7 +61,7 @@ const App = () => {
                 <Route path="/issuer_requests" element={<IssuerRequests />} />
                 <Route path="/give_consent" element={<GiveConsent />} />
                 <Route
-                  path="/remoke_consent"
+                  path="/revoke_consent"
                   element={<CheckRevokeConsent />}
                 />
                 <Route path="/verifier_status" element={<VerifierStatus />} />

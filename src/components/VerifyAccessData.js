@@ -98,6 +98,7 @@ const VerifyAccessData = () => {
     const getAccessData = async () => {
       const results = await get_data_promises();
       setAccessData(results);
+      console.log(results);
       setIsLoading(false);
     };
 
