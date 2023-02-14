@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PublishIcon from "@mui/icons-material/Publish";
 import { toast } from "react-toastify";
-import urlExist from "url-exist";
+import { ProgressBar } from "react-loader-spinner";
 
 import Contract from "../components/utilities/contract/contract";
 import pinata from "../../src/components/utilities/ipfs/pinata";
@@ -9,6 +9,7 @@ import pinata from "../../src/components/utilities/ipfs/pinata";
 function FileUploadMultiple() {
   const [dataName, setDataName] = useState(""); // dataName is FileName
   const [file, setFile] = useState();
+  const [isUploading, setIsUploading] = useState(false);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -41,6 +42,8 @@ function FileUploadMultiple() {
       toast("File Note Found, Select the file properly");
       return;
     }
+
+    setIsUploading(true);
     const cid = await uploadFile();
 
     const status = await Contract.insertUserData(dataName, cid);
@@ -49,11 +52,29 @@ function FileUploadMultiple() {
       return;
     }
     toast("Success! file uploaded successfully");
+    setIsUploading(false);
   };
 
   return (
     <div className="h-screen flex justify-center items-center bg-gray-100 font-bold">
-      <div className="relative">
+      {isUploading ? (
+        <div className="absolute flex flex-col justify-center items-center">
+          Uploading...
+          <ProgressBar
+            height="80"
+            width="80"
+            ariaLabel="progress-bar-loading"
+            wrapperStyle={{}}
+            wrapperClass="progress-bar-wrapper"
+            borderColor="#F4442E"
+            barColor="#51E5FF"
+          />
+        </div>
+      ) : (
+        ""
+      )}
+
+      <div className={`relative ${isUploading ? "opacity-20" : ""}`}>
         <div>
           <div className="relative mb-6 w-full">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">

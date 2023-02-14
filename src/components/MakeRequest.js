@@ -1,24 +1,44 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { ProgressBar } from "react-loader-spinner";
 
 import Contract from "./utilities/contract/contract";
 
 const MakeRequest = () => {
   const [dataName, setDataName] = useState("");
   const [dataId, setDataId] = useState(0);
+  const [inProgress, setInProgress] = useState(false);
 
   const make_request = async () => {
+    setInProgress(true);
     const status = await Contract.makeIssuerRequest(parseInt(dataId, 10));
     if (status) {
       toast("Request made successfully, wait for user approval");
     } else {
       toast("Request failed, there was some error. Try again later");
     }
+    setInProgress(false);
   };
 
   return (
     <div className="h-screen flex justify-center items-center">
-      <div className="w-1/3 mx-auto">
+      {inProgress ? (
+        <div className="absolute flex flex-col justify-center items-center">
+          Requesting...
+          <ProgressBar
+            height="80"
+            width="80"
+            ariaLabel="progress-bar-loading"
+            wrapperStyle={{}}
+            wrapperClass="progress-bar-wrapper"
+            borderColor="#F4442E"
+            barColor="#51E5FF"
+          />
+        </div>
+      ) : (
+        ""
+      )}
+      <div className={`w-1/3 mx-auto ${inProgress ? "opacity-20" : ""}`}>
         <div className="font-bold mb-4 underline w-full text-lg">
           Provide Request details
         </div>

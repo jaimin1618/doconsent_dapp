@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import CancelIcon from "@mui/icons-material/Cancel";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
+import { ColorRing } from "react-loader-spinner";
 
 import { DropDown } from "./DropDown";
 import Contract from "./utilities/contract/contract";
@@ -11,6 +12,7 @@ import { RequestFilter, RequestFilterIndex } from "../constants";
 const FulfilledRequests = () => {
   const [filter, setFilter] = useState(RequestFilter.ALL);
   const [requests, setRequests] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const displayStatusIcon = (status) => {
     if (status === 0) {
@@ -40,12 +42,14 @@ const FulfilledRequests = () => {
     const get_requests = async () => {
       const results = await get_promises();
       setRequests(results);
+      setIsLoading(false);
     };
 
     get_requests();
   }, []);
 
   useEffect(() => {
+    setIsLoading(true);
     const get_indexes = async () => {
       const raw = await Contract.getRequestsMadeByCurrentUser();
       const idx = raw.map((el) => parseInt(el, 10));
@@ -78,6 +82,7 @@ const FulfilledRequests = () => {
         );
         console.log(filtered_results);
         setRequests(filtered_results);
+        setIsLoading(false);
       }
     };
 
@@ -87,8 +92,24 @@ const FulfilledRequests = () => {
   return (
     <div className="">
       <DropDown filter={filter} setFilter={setFilter} />
+      <div className="flex justify-center items-center">
+        {isLoading ? (
+          <ColorRing
+            className="w-full h-full bg-blue-600"
+            visible={true}
+            height="130"
+            width="130"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+          />
+        ) : (
+          ""
+        )}
+      </div>
       <div>
-        <div className="flex items-start justify-center min-h-screen p-6">
+        <div className="flex items-start justify-center min-h-screen p-3 my-3">
           <div className="flex flex-col border-gray-300 border bg-white divide-y rounded-lg flex-none w-full md:w-1/2 lg:w-1/2">
             <div className="flex flex-col space-y-2 divide-y">
               {/* SHOW REQUESTS */}

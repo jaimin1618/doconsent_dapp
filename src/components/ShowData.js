@@ -5,11 +5,11 @@ import DescriptionIcon from "@mui/icons-material/Description";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import CancelIcon from "@mui/icons-material/Cancel";
 // import DownloadIcon from "@mui/icons-material/Download";
+import OfflineShareIcon from "@mui/icons-material/OfflineShare";
 import { toast } from "react-toastify";
 
 import Modal from "./Modal";
 import Contract from "./utilities/contract/contract";
-import pinata from "../../src/components/utilities/ipfs/pinata";
 import { ColorRing } from "react-loader-spinner";
 
 const ShowData = () => {
@@ -49,8 +49,24 @@ const ShowData = () => {
       return idx;
     };
 
+    const get_consented_data_indexes = async () => {
+      const raw = await Contract.userHasConsentIndexes();
+      const idx = raw.map((el) => parseInt(el, 10));
+      return idx;
+    };
+
     const get_promises = async () => {
       const idx = await get_indexes();
+
+      const _cards = await idx.map(async (el, index) => {
+        return await Contract.getUserDataByID(el);
+      });
+
+      return await Promise.all(_cards);
+    };
+
+    const get_promises_for_consent_data = async () => {
+      const idx = await get_consented_data_indexes();
       const _cards = await idx.map(async (el, index) => {
         return await Contract.getUserDataByID(el);
       });
@@ -59,7 +75,24 @@ const ShowData = () => {
 
     const get_data = async () => {
       const results = await get_promises();
-      setCards(results);
+      const _results = await get_promises_for_consent_data();
+
+      const user_data = results.map((el) => {
+        return {
+          ...el,
+          isOwner: true,
+        };
+      });
+      const consent_data = _results.map((el) => {
+        return {
+          ...el,
+          isOwner: false,
+        };
+      });
+
+      const data = [...user_data, ...consent_data];
+      setCards(data);
+      console.log(cards);
       setIsLoading(false);
     };
 
@@ -102,6 +135,7 @@ const ShowData = () => {
 
           {/* Show data */}
           {cards.map((el, idx) => {
+            console.log(el);
             return (
               <div
                 key={idx}
@@ -122,12 +156,19 @@ const ShowData = () => {
                     >
                       <AttachmentIcon />
                     </button>
-                    <button
-                      onClick={() => delete_data(el)}
-                      className="flex justify-around text-red-700 bg-slate-100 p-2 rounded-sm"
-                    >
-                      <DeleteIcon />
-                    </button>
+                    {el.isOwner ? (
+                      <button
+                        onClick={() => delete_data(el)}
+                        className="flex justify-around text-red-700 bg-slate-100 p-2 rounded-sm"
+                      >
+                        <DeleteIcon />
+                      </button>
+                    ) : (
+                      <button className="flex justify-around text-blue-700 bg-slate-100 p-2 rounded-sm">
+                        <OfflineShareIcon />
+                      </button>
+                    )}
+
                     <button>
                       {parseInt(el.data_verification_stage, 10) === 1 &&
                         parseInt(el.issuer_verification_status, 10) === 1 && (

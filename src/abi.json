@@ -1,5 +1,59 @@
 [
   {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "data_name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "data_cid",
+        "type": "string"
+      }
+    ],
+    "name": "addUserData",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "request_id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "status",
+        "type": "uint256"
+      }
+    ],
+    "name": "fulfillRequest",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "data_id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "recipient_address",
+        "type": "address"
+      }
+    ],
+    "name": "give_consent",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "stateMutability": "nonpayable",
     "type": "constructor"
@@ -14,6 +68,50 @@
     ],
     "name": "InvalidRequestID",
     "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "user_data_id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "status",
+        "type": "uint256"
+      }
+    ],
+    "name": "issuerVerification",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "issuer_address",
+        "type": "address"
+      }
+    ],
+    "name": "makeIssuer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "requested_data_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "makeRequest",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "inputs": [
@@ -51,12 +149,43 @@
     "inputs": [
       {
         "internalType": "uint256",
+        "name": "data_id",
+        "type": "uint256"
+      }
+    ],
+    "name": "removeUserData",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
         "name": "request_id",
         "type": "uint256"
       }
     ],
     "name": "RequestNotFound",
     "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "data_id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "recipient_address",
+        "type": "address"
+      }
+    ],
+    "name": "revoke_consent",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "inputs": [
@@ -78,30 +207,35 @@
     "inputs": [
       {
         "internalType": "uint256",
+        "name": "data_id",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "new_data_name",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "new_data_cid",
+        "type": "string"
+      }
+    ],
+    "name": "updateUserData",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
         "name": "user_data_id",
         "type": "uint256"
       }
     ],
     "name": "UserDataNotFound",
     "type": "error"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "string",
-        "name": "data_name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "data_cid",
-        "type": "string"
-      }
-    ],
-    "name": "addUserData",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
   },
   {
     "inputs": [
@@ -125,24 +259,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "request_id",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "status",
-        "type": "uint256"
-      }
-    ],
-    "name": "fulfillRequest",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -248,6 +364,19 @@
   },
   {
     "inputs": [],
+    "name": "getUserConsentDataIndexes",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "data_indexes",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
     "name": "getUserRequest",
     "outputs": [
       {
@@ -257,24 +386,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "data_id",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "recipient_address",
-        "type": "address"
-      }
-    ],
-    "name": "give_consent",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -313,50 +424,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "user_data_id",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "status",
-        "type": "uint256"
-      }
-    ],
-    "name": "issuerVerification",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "issuer_address",
-        "type": "address"
-      }
-    ],
-    "name": "makeIssuer",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "requested_data_id",
-        "type": "uint256"
-      }
-    ],
-    "name": "makeRequest",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   },
   {
@@ -409,60 +476,6 @@
       }
     ],
     "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "data_id",
-        "type": "uint256"
-      }
-    ],
-    "name": "removeUserData",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "data_id",
-        "type": "uint256"
-      },
-      {
-        "internalType": "address",
-        "name": "recipient_address",
-        "type": "address"
-      }
-    ],
-    "name": "revoke_consent",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "data_id",
-        "type": "uint256"
-      },
-      {
-        "internalType": "string",
-        "name": "new_data_name",
-        "type": "string"
-      },
-      {
-        "internalType": "string",
-        "name": "new_data_cid",
-        "type": "string"
-      }
-    ],
-    "name": "updateUserData",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]

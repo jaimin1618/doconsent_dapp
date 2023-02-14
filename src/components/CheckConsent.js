@@ -54,7 +54,7 @@ const CheckConsent = () => {
 
   return (
     <div className="w-full sm:p-4">
-      <div className="p-8 rounded-xl shadow-md bg-white">
+      <div className="p-8 rounded-xl shadow-sm bg-white">
         <div className="mb-5">
           <label
             htmlFor="name"
@@ -105,7 +105,7 @@ const CheckConsent = () => {
       </p> */}
         <button
           onClick={() => runCheckConsent()}
-          className="w-1/2 my-2 block uppercase mx-auto shadow bg-indigo-800 hover:bg-indigo-700 focus:shadow-outline focus:outline-none text-white text-xs py-3 px-10 rounded"
+          className="w-1/2 my-4 block uppercase mx-auto shadow bg-indigo-800 hover:bg-indigo-700 focus:shadow-outline focus:outline-none text-white text-xs py-3 px-10 rounded"
         >
           Check Consent
         </button>

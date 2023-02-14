@@ -193,6 +193,13 @@ async function checkConsent(data_id, user_address) {
   return data;
 }
 
+async function userHasConsentIndexes() {
+  const signer = await requestAccounts();
+  const contract = new ethers.Contract(address, ABI.abi, signer);
+  const data = await contract.getUserConsentDataIndexes();
+  return data;
+}
+
 const _ = {
   requestAccounts,
   getOwner,
@@ -212,6 +219,7 @@ const _ = {
   getConsentGivenListByDataId,
   issuerDataVerification,
   checkConsent,
+  userHasConsentIndexes,
 };
 
 export default _;
