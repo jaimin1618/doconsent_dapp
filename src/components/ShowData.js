@@ -4,12 +4,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import DescriptionIcon from "@mui/icons-material/Description";
 import VerifiedIcon from "@mui/icons-material/Verified";
 import CancelIcon from "@mui/icons-material/Cancel";
+// import DownloadIcon from "@mui/icons-material/Download";
 import { toast } from "react-toastify";
 
 import Modal from "./Modal";
 import Contract from "./utilities/contract/contract";
 import pinata from "../../src/components/utilities/ipfs/pinata";
 import { ColorRing } from "react-loader-spinner";
+import axios from "axios";
 
 const ShowData = () => {
   const [cards, setCards] = useState([]);
@@ -20,7 +22,6 @@ const ShowData = () => {
   const display_data = async (el) => {
     const cid = el.user_data_cid;
     const location = process.env.REACT_APP_IPFS_PUBLIC_GATEWAY + cid;
-    console.log(location);
     window.location.href = location;
   };
 
@@ -29,7 +30,6 @@ const ShowData = () => {
     const cid = el.user_data_cid;
 
     const status = await Contract.removeUserData(id);
-    console.log(status);
     if (status) {
       // remove from IPFS
       const res = await pinata.unpin_file(cid);
@@ -66,7 +66,6 @@ const ShowData = () => {
     const get_data = async () => {
       const results = await get_promises();
       setCards(results);
-      console.log(results);
       setIsLoading(false);
     };
 
@@ -123,8 +122,11 @@ const ShowData = () => {
                     {el.user_data_name.slice(0, 12)}...
                   </p>
                   <div className="flex justify-evenly h-full w-1/2 items-center">
-                    <button className="flex justify-around text-green-800 bg-slate-100 p-2 rounded-sm">
-                      <AttachmentIcon onClick={() => display_data(el)} />
+                    <button
+                      onClick={() => display_data(el)}
+                      className="flex justify-around text-green-800 bg-slate-100 p-2 rounded-sm"
+                    >
+                      <AttachmentIcon />
                     </button>
                     <button
                       onClick={() => delete_data(el)}
