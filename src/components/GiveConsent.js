@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { ProgressBar } from "react-loader-spinner";
 
 import Contract from "./utilities/contract/contract";
 
@@ -7,8 +8,10 @@ const GiveConsent = () => {
   const [options, setOptions] = useState([]);
   const [recipientAddress, setRecipientAddress] = useState("");
   const [selectedOption, setSelectedOption] = useState(0);
+  const [inProgress, setInProgress] = useState(false);
 
   const give_consent = async () => {
+    setInProgress(true);
     const status = await Contract.giveConsent(
       parseInt(selectedOption, 10),
       recipientAddress
@@ -21,6 +24,8 @@ const GiveConsent = () => {
     } else {
       toast("Consent to your data has been given successfully");
     }
+
+    setInProgress(false);
   };
 
   useEffect(() => {
@@ -54,7 +59,27 @@ const GiveConsent = () => {
 
   return (
     <div className="flex items-center justify-center p-12 min-h-screen">
-      <div className="mx-auto w-full max-w-[550px]">
+      {inProgress ? (
+        <div className="absolute flex flex-col justify-center items-center">
+          Uploading...
+          <ProgressBar
+            height="80"
+            width="80"
+            ariaLabel="progress-bar-loading"
+            wrapperStyle={{}}
+            wrapperClass="progress-bar-wrapper"
+            borderColor="#F4442E"
+            barColor="#51E5FF"
+          />
+        </div>
+      ) : (
+        ""
+      )}
+      <div
+        className={`mx-auto w-full max-w-[550px] ${
+          inProgress ? "opacity-20" : ""
+        }`}
+      >
         <div className="mb-5">
           <label
             htmlFor="name"

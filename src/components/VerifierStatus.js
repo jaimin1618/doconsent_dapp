@@ -3,7 +3,7 @@ import "./styles/toggle.css";
 
 const VerifierStatus = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center">
+    <div className="flex items-center justify-center">
       <div className="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
         <input
           type="checkbox"

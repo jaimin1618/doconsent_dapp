@@ -6,9 +6,11 @@ import Contract from "./utilities/contract/contract";
 import { toast } from "react-toastify";
 
 import CheckConsent from "./CheckConsent";
+import { ColorRing } from "react-loader-spinner";
 
 const CheckRevokeConcent = () => {
   const [consents, setConsents] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const revoke_access = async (id, recipient_address) => {
     const status = await Contract.removeConsent(
@@ -68,8 +70,10 @@ const CheckRevokeConcent = () => {
 
     const get_user_data_with_consent_addresses = async () => {
       const data = await get_consent_promises();
-      // console.log(data);
-      setConsents(data);
+      const results = data.filter((el) => el.consent_addresses.length > 0);
+      console.log(results);
+      setConsents(results);
+      setIsLoading(false);
     };
 
     get_user_data_with_consent_addresses();
@@ -78,13 +82,32 @@ const CheckRevokeConcent = () => {
   return (
     <div className="h-screen">
       <section className="container px-6 py-4 mx-auto">
-        <div className="grid gap-6 mb-8">
-          <CheckConsent />
+        <CheckConsent />
+
+        <div
+          className={
+            isLoading ? "flex justify-center items-center" : "grid gap-6 mb-8"
+          }
+        >
+          {isLoading ? (
+            <ColorRing
+              className="w-full h-full bg-blue-600"
+              visible={true}
+              height="130"
+              width="130"
+              ariaLabel="blocks-loading"
+              wrapperStyle={{}}
+              wrapperClass="blocks-wrapper"
+              colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
+            />
+          ) : (
+            ""
+          )}
 
           {consents.map((el, idx) => {
             return (
               <div key={idx} className="w-full p-4">
-                <div className="p-8 rounded-xl shadow-md bg-white">
+                <div className="p-8 rounded-xl shadow-sm bg-white">
                   <span className="text-2xl mb-3">
                     <i>data name:</i> «
                     <span className="text-3xl font-bold">
@@ -93,17 +116,11 @@ const CheckRevokeConcent = () => {
                     »
                   </span>
                   <br />
-                  {/* <p className="text-base">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Accusantium alias minima rerum. Soluta assumenda eveniet
-                    obcaecati maxime temporibus qui ab voluptas doloremque illo,
-                    odio optio ex, atque numquam tempore quis.
-                  </p> */}
                   <hr className="my-4" />
 
                   {el.consent_addresses.map((address, _idx) => (
                     <div
-                      className="flex items-center justify-items-end"
+                      className="flex items-center justify-items-end my-3"
                       key={_idx}
                     >
                       <div className="flex  w-2/3 items-center justify-start">
