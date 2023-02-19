@@ -1,19 +1,22 @@
 import React, { useState, useEffect } from "react";
-import AttachmentIcon from "@mui/icons-material/Attachment";
+
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import DescriptionIcon from "@mui/icons-material/Description";
-import VerifiedIcon from "@mui/icons-material/Verified";
-import CancelIcon from "@mui/icons-material/Cancel";
-// import DownloadIcon from "@mui/icons-material/Download";
-import OfflineShareIcon from "@mui/icons-material/OfflineShare";
+import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
+import GppBadIcon from "@mui/icons-material/GppBad";
+import PendingActionsRoundedIcon from "@mui/icons-material/PendingActionsRounded";
+
 import { toast } from "react-toastify";
 
 import Contract from "./utilities/contract/contract";
 import { ColorRing } from "react-loader-spinner";
+import { InfinitySpin } from "react-loader-spinner";
 
 const ShowData = () => {
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [inProgress, setInProgress] = useState(false);
 
   const display_data = async (el) => {
     const cid = el.user_data_cid;
@@ -22,6 +25,7 @@ const ShowData = () => {
   };
 
   const delete_data = async (el) => {
+    setInProgress(true);
     const id = el.user_data_id;
     // const cid = el.user_data_cid;
 
@@ -36,6 +40,7 @@ const ShowData = () => {
         "Data delete failed due to some error with blockchain network, Try again later"
       );
     }
+    setInProgress(false);
   };
 
   useEffect(() => {
@@ -98,19 +103,27 @@ const ShowData = () => {
     <div className="h-screen">
       <section
         className={`container px-6 py-4 mx-auto ${
-          isLoading ? "flex justify-center" : ""
+          isLoading ? "" : "flex justify-center"
         }`}
       >
         <div
           className={` ${
             isLoading
-              ? "h-screen w-full flex justify-center items-start"
-              : "grid gap-6 mb-8 md:grid-cols-2 lg:grid-cols-3"
+              ? "h-screen w-full  flex justify-center items-start"
+              : "w-full lg:w-2/3 flex justify-center items-center"
           }`}
         >
+          {inProgress ? (
+            <div className="absolute flex flex-col mt-5 justify-center items-center">
+              Deleting data...
+              {inProgress ? <InfinitySpin width="200" color="#4fa94d" /> : ""}
+            </div>
+          ) : (
+            ""
+          )}
           {isLoading ? (
             <ColorRing
-              className="w-full h-full bg-blue-600"
+              className="w-full h-full"
               visible={true}
               height="130"
               width="130"
@@ -120,60 +133,92 @@ const ShowData = () => {
               colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
             />
           ) : (
-            ""
-          )}
-
-          {/* Show data */}
-          {cards.map((el, idx) => {
-            return (
-              <div
-                key={idx}
-                className="relative items-center p-2 bg-white border-2 border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 hover:bg-slate-2 hover:bg-slate-200 flex"
-              >
-                <div className="p-1 mr-2 bg-blue-500  text-white rounded-full">
-                  <DescriptionIcon />
-                </div>
-                <div className="w-full h-full flex justify-start items-center">
-                  <p className="font-bold text-xs text-gray-100 w-2/3 bg-cyan-700 h-full flex items-center justify-start pl-1 rounded-sm">
-                    [{parseInt(el.user_data_id, 10)}]
-                    {el.user_data_name.slice(0, 12)}...
-                  </p>
-                  <div className="flex justify-evenly h-full w-1/2 items-center">
-                    <button
-                      onClick={() => display_data(el)}
-                      className="flex justify-around text-green-800 bg-slate-100 p-2 rounded-sm"
-                    >
-                      <AttachmentIcon />
-                    </button>
-                    {el.isOwner ? (
-                      <button
-                        onClick={() => delete_data(el)}
-                        className="flex justify-around text-red-700 bg-slate-100 p-2 rounded-sm"
-                      >
-                        <DeleteIcon />
-                      </button>
-                    ) : (
-                      <button className="flex justify-around text-blue-700 bg-slate-100 p-2 rounded-sm">
-                        <OfflineShareIcon />
-                      </button>
-                    )}
-
-                    <button>
-                      {parseInt(el.data_verification_stage, 10) === 1 &&
-                        parseInt(el.issuer_verification_status, 10) === 1 && (
-                          <VerifiedIcon className="absolute -top-2 -right-2 text-green-800" />
-                        )}
-                      {parseInt(el.data_verification_stage, 10) === 1 &&
-                        parseInt(el.issuer_verification_status, 10) === 2 && (
-                          <CancelIcon className="absolute -top-2 -right-2 text-red-700" />
-                        )}
-                    </button>
+            <div className={`flex flex-col w-full ${inProgress ? "opacity-25" : ""}`}>
+              <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                  <div className="overflow-x-auto">
+                    <table className="min-w-full">
+                      <thead className="border-b bg-gray-800 ">
+                        <tr className="">
+                          <th
+                            scope="col"
+                            className="text-sm font-semibold text-gray-200 px-6 py-4 text-center"
+                          >
+                            #
+                          </th>
+                          <th
+                            scope="col"
+                            className="text-sm font-semibold text-gray-200 px-6 py-4 text-center"
+                          >
+                            Data name
+                          </th>
+                          <th
+                            scope="col"
+                            className="text-sm text-center font-semibold text-gray-200 px-6 py-4"
+                          >
+                            Actions
+                          </th>
+                          <th
+                            scope="col"
+                            className="text-sm font-semibold text-gray-200 px-6 py-4 text-center"
+                          >
+                            Verified
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {cards.map((el, idx) => (
+                          <tr key={idx} className="bg-white border-b">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-center font-medium text-gray-200">
+                              {parseInt(el.user_data_id, 10)}
+                            </td>
+                            <td className="text-sm text-gray-700 font-light px-6 text-center py-4 whitespace-nowrap">
+                              {el.user_data_name}
+                            </td>
+                            <td className="text-sm text-gray-700 font-light px-6 py-4 whitespace-nowrap text-center flex justify-around">
+                              <button
+                              
+                                onClick={() => display_data(el)}
+                                type="button"
+                                className="inline-block mx-1 px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                              >
+                                View
+                              </button>
+                              <button
+                                type="button"
+                                className="inline-block mx-1 px-6 py-2.5 bg-yellow-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-700 active:shadow-lg transition duration-150 ease-in-out"
+                              >
+                                Warning
+                              </button>
+                              <button
+                                onClick={() => delete_data(el)}
+                                type="button"
+                                className="inline-block mx-1 px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+                              >
+                                Danger
+                              </button>
+                            </td>
+                            <td className="text-sm text-gray-700 font-light px-6 py-4 whitespace-nowrap text-center">
+                              {parseInt(el.data_verification_stage, 10) == 1 ? (
+                                parseInt(el.issuer_verification_status, 10) ==
+                                1 ? (
+                                  <VerifiedUserIcon className="text-green-700" />
+                                ) : (
+                                  <GppBadIcon className="text-red-500" />
+                                )
+                              ) : (
+                                <PendingActionsRoundedIcon />
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
-            );
-          })}
-          {/* Show data */}
+            </div>
+          )}
         </div>
       </section>
     </div>

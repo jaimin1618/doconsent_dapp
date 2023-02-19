@@ -105,7 +105,7 @@ function FileUploadMultiple() {
           </div>
           <button
             onClick={() => handleUploadClick()}
-            className="w-1/2 my-5 block uppercase mx-auto shadow bg-indigo-800 hover:bg-indigo-700 focus:shadow-outline focus:outline-none text-white text-xs py-3 px-10 rounded"
+            className="w-auto my-5 block uppercase mx-auto shadow bg-indigo-800 hover:bg-indigo-700 focus:shadow-outline focus:outline-none text-white text-xs py-3 px-10 rounded"
           >
             Upload
           </button>

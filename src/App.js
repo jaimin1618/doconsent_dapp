@@ -19,10 +19,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import FileUpload from "./components/FileUpload";
 import Sidebar from "./components/Sidebar";
+import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
+import Table from "./components/Table";
 
 const App = () => {
   const [role, setRole] = useState(ROLES.HOLDER);
   const [userAccount, setUserAccount] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const setUserRole = async () => {
@@ -38,7 +42,6 @@ const App = () => {
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const accounts = await provider.send("eth_requestAccounts", []);
         setUserAccount(accounts[0]);
-        console.log("main");
         setUserRole();
       });
     }
@@ -57,45 +60,51 @@ const App = () => {
 
   return (
     <Router>
-      <div className="flex">
-        <Sidebar user_role={role} />
+      <div className="">
+        <Navbar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
         <ToastContainer />
-        <div className="w-full ml-[3.30rem]">
-          <Routes>
-            <Route path="/" element={<Main />} />
 
-            {/* HOLDER Routes  */}
-            {role === ROLES.HOLDER ? (
-              <>
-                <Route path="/mydata" element={<ShowData />} />
-                <Route path="/issuer_requests" element={<IssuerRequests />} />
-                <Route path="/give_consent" element={<GiveConsent />} />
-                <Route
-                  path="/revoke_consent"
-                  element={<CheckRevokeConsent />}
-                />
-                <Route path="/verifier_status" element={<VerifierStatus />} />
-                <Route path="/document_upload" element={<FileUpload />} />
-              </>
-            ) : (
-              <>
-                {/* ISSUER Routes  */}
+        <div className="flex">
+          {isMenuOpen ? <Sidebar user_role={role} /> : ""}
+          <div className="w-full">
+            <Routes>
+              <Route path="/" element={<Main />} />
 
-                <Route
-                  path="/my_permissioned_data"
-                  element={<VerifyAccessData />}
-                />
-                <Route path="/make_request" element={<MakeRequest />} />
-                <Route
-                  path="/fulfilled_requests"
-                  element={<FulfilledRequests />}
-                />
-                <Route path="/*" element={<PageNotFound />} />
-              </>
-            )}
-            <Route path="/*" element={<PageNotFound />} />
-          </Routes>
+              {/* HOLDER Routes  */}
+              {role === ROLES.HOLDER ? (
+                <>
+                  <Route path="/table" element={<Table />} />
+                  <Route path="/mydata" element={<ShowData />} />
+                  <Route path="/issuer_requests" element={<IssuerRequests />} />
+                  <Route path="/give_consent" element={<GiveConsent />} />
+                  <Route
+                    path="/revoke_consent"
+                    element={<CheckRevokeConsent />}
+                  />
+                  <Route path="/verifier_status" element={<VerifierStatus />} />
+                  <Route path="/document_upload" element={<FileUpload />} />
+                </>
+              ) : (
+                <>
+                  {/* ISSUER Routes  */}
+
+                  <Route
+                    path="/my_permissioned_data"
+                    element={<VerifyAccessData />}
+                  />
+                  <Route path="/make_request" element={<MakeRequest />} />
+                  <Route
+                    path="/fulfilled_requests"
+                    element={<FulfilledRequests />}
+                  />
+                  <Route path="/*" element={<PageNotFound />} />
+                </>
+              )}
+              <Route path="/*" element={<PageNotFound />} />
+            </Routes>
+          </div>
         </div>
+        <Footer />
       </div>
     </Router>
   );

@@ -10,7 +10,6 @@ import FactCheckIcon from "@mui/icons-material/FactCheck";
 import FolderSpecialIcon from "@mui/icons-material/FolderSpecial";
 import { useNavigate } from "react-router";
 import { ROLES } from "../constants";
-import Logo from "../media/Logo.png";
 
 const Sidebar = ({ user_role }) => {
   const [navigation, setNavigation] = useState([]);
@@ -18,12 +17,13 @@ const Sidebar = ({ user_role }) => {
 
   useEffect(() => {
     const holderNavigation = [
+      { path: "mydata", linkName: "My Files", element: <FolderIcon /> },
+
       {
         path: "document_upload",
         linkName: "Upload document",
         element: <CloudUploadIcon />,
       },
-      { path: "mydata", linkName: "My Files", element: <FolderIcon /> },
       {
         path: "issuer_requests",
         linkName: "Issuer requests",
@@ -66,28 +66,23 @@ const Sidebar = ({ user_role }) => {
   }, [user_role]);
 
   return (
-    <div className="fixed z-10 bg-gray-300">
-      <div className="sidebar w-[3.35rem] overflow-hidden border-r hover:w-72 hover:bg-cyan-900 hover:shadow-lg">
-        <div className="flex h-screen flex-col justify-between pb-0">
+    <div className="absolute z-10">
+      <div className="sidebar w-72 h-screen bg-slate-100">
+        <div className="flex flex-col justify-between">
           <div>
             <h1
               onClick={() => navigate("/")}
               className="w-full flex items-center justify-center"
-            >
-              <button className="w-full">
-                {/* <img className="bg-white rounded-md" src={Logo} /> */}
-                <img className="p-3 bg-yellow-500" alt="logo" src={Logo} />
-              </button>
-            </h1>
-            <ul className="mt-2 space-y-2 tracking-wide">
+            ></h1>
+            <ul className="mt-2 tracking-wide">
               {navigation.map((el, idx) => (
-                <li className="min-w-max" key={idx}>
+                <li className="" key={idx}>
                   <button
                     onClick={() => navigate(el.path)}
-                    className="bg group flex items-center space-x-4 hover:underline hover:text-gray-400 underline-offset-8 px-4 py-2 text-black font-semibold font-sans"
+                    className="flex items-center space-x-4 hover:underline hover:text-gray-400 underline-offset-8 px-4 py-2 text-black font-semibold font-sans"
                   >
                     {el.element}
-                    <span className="-mr-1 font-semibold font-sans text-white">
+                    <span className="-mr-1 font-semibold font-sans text-black">
                       {el.linkName}
                     </span>
                   </button>

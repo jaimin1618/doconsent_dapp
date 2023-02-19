@@ -105,10 +105,18 @@ const CheckConsent = () => {
       </p> */}
         <button
           onClick={() => runCheckConsent()}
-          className="w-1/2 my-4 block uppercase mx-auto shadow bg-indigo-800 hover:bg-indigo-700 focus:shadow-outline focus:outline-none text-white text-xs py-3 px-10 rounded"
+          className="w-1/4 my-4 block uppercase mx-auto shadow bg-indigo-800 hover:bg-indigo-700 focus:shadow-outline focus:outline-none text-white text-xs py-3 px-10 rounded"
         >
           Check Consent
         </button>
+
+        {/* <button
+          onClick={() => runCheckConsent()}
+          type="button"
+          class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+        >
+          Give consent
+        </button> */}
       </div>
     </div>
   );
