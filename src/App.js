@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
+import { ethers } from "ethers";
 
 import ShowData from "./components/ShowData";
 import GiveConsent from "./components/GiveConsent";
@@ -32,18 +33,27 @@ const App = () => {
     };
     setUserRole();
 
-    const onAccountChange = async (accounts) => {
-      // console.log("Account changed");
-      setUserAccount(accounts[0]);
-      setUserRole();
-      // console.log(userAccount);
-      // console.log(role);
-    };
-    window.ethereum.on("accountsChanged", onAccountChange);
+    async function onAccountChange() {
+      window.ethereum.on("accountsChanged", async function () {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const accounts = await provider.send("eth_requestAccounts", []);
+        setUserAccount(accounts[0]);
+        console.log("main");
+        setUserRole();
+      });
+    }
+    onAccountChange();
 
-    return () =>
-      window.ethereum.removeListener("accountsChanged", onAccountChange);
-  }, [userAccount]);
+    // const onAccountChange = async (accounts) => {
+    //   console.log("acc. changed");
+    //   setUserAccount(accounts[0]);
+    //   setUserRole();
+    // };
+    // window.ethereum.on("accountsChanged", onAccountChange);
+
+    // return async () =>
+    //   window.ethereum.removeListener("accountsChanged", onAccountChange);
+  }, []);
 
   return (
     <Router>
