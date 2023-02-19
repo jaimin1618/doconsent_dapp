@@ -4,6 +4,9 @@ import Contract from "./utilities/contract/contract";
 import { ColorRing } from "react-loader-spinner";
 import { InfinitySpin } from "react-loader-spinner";
 
+import ThumbUpAltRoundedIcon from "@mui/icons-material/ThumbUpAltRounded";
+import ThumbDownAltRoundedIcon from "@mui/icons-material/ThumbDownAltRounded";
+
 const IssuerRequests = () => {
   const [requests, setRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -58,7 +61,7 @@ const IssuerRequests = () => {
 
     const get_requests = async () => {
       const results = await get_promises();
-      // console.log(results);
+      console.log(results);
       setRequests(results);
       setIsLoading(false);
     };
@@ -68,10 +71,14 @@ const IssuerRequests = () => {
 
   return (
     <div>
-      <div className="flex items-start justify-center bg-sky-100 h-screen  p-6">
-        <div className="flex flex-col items-center justify-center divide-y w-full">
+      <div className="flex items-start justify-center bg-sky-100 h-screen p-6">
+        <div
+          className={`${
+            isLoading ? "" : "lg:w-2/3 w-full flex justify-center items-center"
+          }`}
+        >
           {inProgress ? (
-            <div className="absolute h-full flex flex-col justify-center items-center">
+            <div className="absolute flex flex-col mt-5 justify-center items-center">
               {action === "APPROVE"
                 ? "approving"
                 : action === "REJECT"
@@ -96,65 +103,104 @@ const IssuerRequests = () => {
               colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
             />
           ) : (
-            <div className="flex flex-col space-y-2 divide-y">
-              {/* SHOW REQUESTS */}
-              {requests.map((el, idx) => (
-                <div
-                  key={idx}
-                  className={`flex justify-between space-x-3 items-center p-3 ${
-                    el.isCompleted ? " outline-green-700 outline-3 outline" : ""
-                  } ${inProgress ? "opacity-20" : ""}`}
-                >
-                  <div className="flex items-center space-x-4">
-                    <img
-                      src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                      className="rounded-full h-14 w-20"
-                      alt=""
-                    />
-                    <div className="flex flex-col space-y-3 text-sm w-full">
-                      <p>
-                        Requested for:&nbsp;
-                        <span className="font-semibold">
-                          {el.requested_data_name.substr(0, 30)}
-                        </span>
-                      </p>
-                      <p>
-                        Requested by:&nbsp;
-                        <span className="font-semibold">
-                          {el.request_from.substr(0, 30)}...
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                  <div
-                    className={`${
-                      el.isCompleted ? "hidden" : ""
-                    } w-1/3 bg-blue-0 h-full flex justify-around`}
-                  >
-                    <button
-                      onClick={() => approve_request(el.request_id)}
-                      className="w-1/2 border rounded-md px-2 py-2 mx-1 bg-green-500 text-white"
-                    >
-                      Approve
-                    </button>
-                    <button
-                      onClick={() => reject_request(el.request_id)}
-                      className="w-1/2 border rounded-md px-2 py-2 mx-1 bg-red-500 text-white"
-                    >
-                      Reject
-                    </button>
+            <div className={`flex flex-col ${inProgress ? "opacity-25" : ""}`}>
+              <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                  <div className="overflow-x-auto">
+                    <table className="min-w-full">
+                      <thead className="border-b bg-gray-800 ">
+                        <tr className="">
+                          <th
+                            scope="col"
+                            className="text-sm font-semibold text-gray-200 px-6 py-4 text-center"
+                          >
+                            #
+                          </th>
+                          <th
+                            scope="col"
+                            className="text-sm font-semibold text-gray-200 px-6 py-4 text-center"
+                          >
+                            Requested data
+                          </th>
+                          <th
+                            scope="col"
+                            className="text-sm text-center font-semibold text-gray-200 px-6 py-4"
+                          >
+                            Request from
+                          </th>
+                          <th
+                            scope="col"
+                            className="text-sm font-semibold text-gray-200 px-6 py-4 text-center"
+                          >
+                            Actions
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {requests.map((el, idx) => (
+                          <tr key={idx} className="bg-white border-b">
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-center font-medium text-gray-200">
+                              {parseInt(el.request_id, 10)}
+                            </td>
+                            <td className="text-sm text-gray-700 font-light px-6 text-center py-4 whitespace-nowrap">
+                              {el.requested_data_name}
+                            </td>
+                            <td className="text-sm text-gray-700 font-light px-6 text-center py-4 whitespace-nowrap">
+                              {el.request_from}
+                            </td>
+                            <td className="text-sm text-gray-700 font-light px-6 py-4 whitespace-nowrap text-center flex justify-around">
+                              {el.isCompleted ? (
+                                <button
+                                  disabled
+                                  type="button"
+                                  className={
+                                    el.request_status === 1
+                                      ? "opacity-50 inline-block mx-1 px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out"
+                                      : "opacity-50 inline-block mx-1 px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+                                  }
+                                >
+                                  {el.request_status === 1 ? (
+                                    <>
+                                      Approved <ThumbUpAltRoundedIcon />
+                                    </>
+                                  ) : (
+                                    <>
+                                      Rejected <ThumbDownAltRoundedIcon />
+                                    </>
+                                  )}
+                                </button>
+                              ) : (
+                                <>
+                                  <button
+                                    onClick={() =>
+                                      approve_request(el.request_id)
+                                    }
+                                    type="button"
+                                    className="inline-block mx-1 px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out"
+                                  >
+                                    Approve
+                                  </button>
+                                  <button
+                                    onClick={() =>
+                                      reject_request(el.request_id)
+                                    }
+                                    type="button"
+                                    className="inline-block mx-1 px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+                                  >
+                                    Reject
+                                  </button>
+                                </>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
-              ))}
-              {/* SHOW REQUESTS */}
+              </div>
             </div>
           )}
-
-          {/* <div className="p-4">
-            <button className="w-full border p-2 rounded-md hover:opacity-60 transition">
-              View all
-            </button>
-          </div> */}
         </div>
       </div>
     </div>

@@ -71,7 +71,7 @@ const CheckRevokeConcent = () => {
     const get_user_data_with_consent_addresses = async () => {
       const data = await get_consent_promises();
       const results = data.filter((el) => el.consent_addresses.length > 0);
-      console.log(results);
+      // console.log(results);
       setConsents(results);
       setIsLoading(false);
     };
