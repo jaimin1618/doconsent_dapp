@@ -76,7 +76,7 @@ const Sidebar = ({ user_role }) => {
             >
               <button className="w-full">
                 {/* <img className="bg-white rounded-md" src={Logo} /> */}
-                <img className="p-3 bg-yellow-500" src={Logo} />
+                <img className="p-3 bg-yellow-500" alt="logo" src={Logo} />
               </button>
             </h1>
             <ul className="mt-2 space-y-2 tracking-wide">

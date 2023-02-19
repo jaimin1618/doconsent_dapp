@@ -6,14 +6,11 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { toast } from "react-toastify";
 import { ColorRing } from "react-loader-spinner";
 
-import Modal from "./Modal";
 import Contract from "./utilities/contract/contract";
 // import IPFS from "./utilities/ipfs/ipfs";
 
 const VerifyAccessData = () => {
   const [accessData, setAccessData] = useState([]);
-  const [modalContent, setModalContent] = useState({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const display_data = async (el) => {
@@ -98,7 +95,7 @@ const VerifyAccessData = () => {
     const getAccessData = async () => {
       const results = await get_data_promises();
       setAccessData(results);
-      console.log(results);
+      // console.log(results);
       setIsLoading(false);
     };
 
@@ -107,11 +104,7 @@ const VerifyAccessData = () => {
 
   return (
     <div className="h-screen">
-      <Modal
-        modalContent={modalContent}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-      />
+
       <section className="container px-6 py-4 mx-auto">
         <div
           className={`${

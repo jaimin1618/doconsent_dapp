@@ -6,7 +6,7 @@ const Main = () => {
     <div className="bg-white dark:bg-gray-900 h-screen">
       <div className="flex justify-center h-screen">
         <div
-          className="hidden bg-cover lg:block lg:w-2/3"
+          className="bg-cover lg:block lg:w-2/3"
           style={{
             backgroundImage: "url('/media/Banner.jpg')",
           }}
@@ -53,7 +53,7 @@ const Main = () => {
                 Don't have Metamask, No worry! integrate a browser extension
                 from this&nbsp;
                 <a
-                  target="_blank"
+                  // target="_blank"
                   href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn"
                   className="text-blue-500 focus:outline-none focus:underline hover:underline"
                 >

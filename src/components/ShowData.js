@@ -8,14 +8,11 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import OfflineShareIcon from "@mui/icons-material/OfflineShare";
 import { toast } from "react-toastify";
 
-import Modal from "./Modal";
 import Contract from "./utilities/contract/contract";
 import { ColorRing } from "react-loader-spinner";
 
 const ShowData = () => {
   const [cards, setCards] = useState([]);
-  const [modalContent, setModalContent] = useState({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const display_data = async (el) => {
@@ -26,8 +23,7 @@ const ShowData = () => {
 
   const delete_data = async (el) => {
     const id = el.user_data_id;
-    const cid = el.user_data_cid;
-    console.log(id, cid);
+    // const cid = el.user_data_cid;
 
     const status = await Contract.removeUserData(id);
     if (status) {
@@ -92,7 +88,6 @@ const ShowData = () => {
 
       const data = [...user_data, ...consent_data];
       setCards(data);
-      console.log(cards);
       setIsLoading(false);
     };
 
@@ -101,11 +96,6 @@ const ShowData = () => {
 
   return (
     <div className="h-screen">
-      <Modal
-        modalContent={modalContent}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-      />
       <section
         className={`container px-6 py-4 mx-auto ${
           isLoading ? "flex justify-center" : ""
@@ -135,7 +125,6 @@ const ShowData = () => {
 
           {/* Show data */}
           {cards.map((el, idx) => {
-            console.log(el);
             return (
               <div
                 key={idx}

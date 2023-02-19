@@ -33,11 +33,11 @@ const App = () => {
     setUserRole();
 
     const onAccountChange = async (accounts) => {
-      console.log("Account changed");
+      // console.log("Account changed");
       setUserAccount(accounts[0]);
       setUserRole();
-      console.log(userAccount);
-      console.log(role);
+      // console.log(userAccount);
+      // console.log(role);
     };
     window.ethereum.on("accountsChanged", onAccountChange);
 
@@ -53,7 +53,7 @@ const App = () => {
         <div className="w-full ml-[3.30rem]">
           <Routes>
             <Route path="/" element={<Main />} />
-            
+
             {/* HOLDER Routes  */}
             {role === ROLES.HOLDER ? (
               <>
