@@ -38,7 +38,11 @@ const MakeRequest = () => {
       ) : (
         ""
       )}
-      <div className={`w-1/3 mx-auto ${inProgress ? "opacity-20" : ""}`}>
+      <div
+        className={`lg:w-1/3 w-full shadow-md p-6 mx-3 flex flex-col justify-center ${
+          inProgress ? "opacity-20" : ""
+        }`}
+      >
         <div className="font-bold mb-4 underline w-full text-lg">
           Provide Request details
         </div>
@@ -49,7 +53,6 @@ const MakeRequest = () => {
           Data name
         </label>
         <div className="relative mb-6">
-          <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none"></div>
           <input
             value={dataName}
             onChange={(e) => setDataName(e.target.value)}
@@ -75,12 +78,18 @@ const MakeRequest = () => {
             placeholder="e.g. 297"
           />
         </div>
-        <button
-          onClick={() => make_request()}
-          className="block mt-5 uppercase mx-auto shadow bg-indigo-800 hover:bg-indigo-700 focus:shadow-outline focus:outline-none text-white text-xs py-3 px-10 rounded"
-        >
+        {/* <button className="block mt-5 uppercase mx-auto shadow bg-indigo-800 hover:bg-indigo-700 focus:shadow-outline focus:outline-none text-white text-xs py-3 px-10 rounded">
           make a issuer data request
-        </button>
+        </button> */}
+        <div className="flex justify-center items-center">
+          <button
+            onClick={() => make_request()}
+            type="button"
+            className="flex justify-center items-center mt-6 px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+          >
+            Make a issuer data request
+          </button>
+        </div>
       </div>
     </div>
   );

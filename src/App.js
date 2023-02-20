@@ -43,6 +43,7 @@ const App = () => {
         const accounts = await provider.send("eth_requestAccounts", []);
         setUserAccount(accounts[0]);
         setUserRole();
+        window.location.href = "/";
       });
     }
     onAccountChange();
@@ -65,7 +66,11 @@ const App = () => {
         <ToastContainer />
 
         <div className="flex">
-          {isMenuOpen ? <Sidebar user_role={role} /> : ""}
+          {isMenuOpen ? (
+            <Sidebar setIsMenuOpen={setIsMenuOpen} user_role={role} />
+          ) : (
+            ""
+          )}
           <div className="w-full">
             <Routes>
               <Route path="/" element={<Main />} />

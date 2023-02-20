@@ -11,7 +11,7 @@ import FolderSpecialIcon from "@mui/icons-material/FolderSpecial";
 import { useNavigate } from "react-router";
 import { ROLES } from "../constants";
 
-const Sidebar = ({ user_role }) => {
+const Sidebar = ({ user_role, setIsMenuOpen }) => {
   const [navigation, setNavigation] = useState([]);
   const navigate = useNavigate();
 
@@ -78,7 +78,10 @@ const Sidebar = ({ user_role }) => {
               {navigation.map((el, idx) => (
                 <li className="" key={idx}>
                   <button
-                    onClick={() => navigate(el.path)}
+                    onClick={() => {
+                      navigate(el.path);
+                      setIsMenuOpen(false);
+                    }}
                     className="flex items-center space-x-4 hover:underline hover:text-gray-400 underline-offset-8 px-4 py-2 text-black font-semibold font-sans"
                   >
                     {el.element}

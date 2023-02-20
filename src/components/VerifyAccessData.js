@@ -104,7 +104,6 @@ const VerifyAccessData = () => {
 
   return (
     <div className="h-screen">
-
       <section className="container px-6 py-4 mx-auto">
         <div
           className={`${

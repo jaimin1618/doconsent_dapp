@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { ProgressBar } from "react-loader-spinner";
 
 import Contract from "./utilities/contract/contract";
+import DropDownDataNames from "./DropDownDataNames";
 
 const GiveConsent = () => {
   const [options, setOptions] = useState([]);
@@ -88,17 +89,22 @@ const GiveConsent = () => {
             Select data
           </label>
 
+          {/* <DropDownDataNames /> */}
           <select
             onChange={(e) => setSelectedOption(e.target.value)}
             defaultValue={"DEFAULT"}
             name="dataNames"
-            className="w-full px-6 py-3"
+            className="w-full px-3 py-3 rounded-md bg-zinc-50 border-none shadow-md"
           >
-            <option value="DEFAULT" disabled>
-              Choose a data ...
+            <option className="" value="DEFAULT" disabled>
+              Select data
             </option>
             {options.map((el, idx) => (
-              <option key={idx} value={el.dataId}>
+              <option
+                className=""
+                key={idx}
+                value={el.dataId}
+              >
                 {el.dataName}
               </option>
             ))}
@@ -125,7 +131,7 @@ const GiveConsent = () => {
           <button
             onClick={() => give_consent()}
             type="button"
-            class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+            className="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
           >
             Give consent
           </button>

@@ -13,13 +13,13 @@ export const DropDown = ({ setFilter, filter }) => {
             after:content-[""] after:inline-block after:absolute after:top-0 after:bg-white/40
             after:w-full after:h-full after:-z-20 after:blur-[2px] after:rounded-lg
         peer-focus:top-12 peer-focus:opacity-100 peer-focus:visible 
-        transition-all duration-300 invisible  opacity-0 
+        transition-all duration-300  opacity-0 
         '
         >
           <ul className="py-6 px-3 flex flex-col gap-3">
             <li
               onClick={() => setFilter(RequestFilter.ALL)}
-              className="cursor-pointer bg-red-500 p-3 rounded-md hover:opacity-90 text-white"
+              className="cursor-pointer p-3 rounded-md text-white"
             >
               ALL Requests
             </li>
