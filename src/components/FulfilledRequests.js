@@ -12,12 +12,14 @@ import FilterDropDown from "./FilterDropDown";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import GppBadIcon from "@mui/icons-material/GppBad";
 import PendingActionsRoundedIcon from "@mui/icons-material/PendingActionsRounded";
+import { useNavigate } from "react-router";
 
 // getIssuerFulfilledRequests
 const FulfilledRequests = () => {
   const [filter, setFilter] = useState(RequestFilter.ALL);
   const [requests, setRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const get_datetime = (time) => {
     const d = new Date(0);
@@ -114,6 +116,7 @@ const FulfilledRequests = () => {
       }
       setTimeout(() => {
         setIsLoading(false);
+        console.log(filtered_results);
         setRequests(filtered_results);
       }, 1000);
     };
@@ -247,6 +250,14 @@ const FulfilledRequests = () => {
                                   <td className="text-sm text-gray-700 font-light px-6 text-center py-4 whitespace-nowrap">
                                     {el.request_status === 1 ? (
                                       <button
+                                        onClick={() =>
+                                          navigate(
+                                            `/my_permissioned_data/${parseInt(
+                                              el.requested_data_id,
+                                              10
+                                            )}`
+                                          )
+                                        }
                                         type="button"
                                         className="inline-block mx-1 px-6 py-2.5 bg-green-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-900 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
                                       >

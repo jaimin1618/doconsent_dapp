@@ -94,7 +94,7 @@ const App = () => {
                   {/* ISSUER Routes  */}
 
                   <Route
-                    path="/my_permissioned_data"
+                    path="/my_permissioned_data/:data_id"
                     element={<VerifyAccessData />}
                   />
                   <Route path="/make_request" element={<MakeRequest />} />

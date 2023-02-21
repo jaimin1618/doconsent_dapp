@@ -203,7 +203,7 @@
           },
           {
             "internalType": "bool",
-            "name": "isCompleted",
+            "name": "isVerificationCompleted",
             "type": "bool"
           },
           {
@@ -342,7 +342,7 @@
     "inputs": [
       {
         "internalType": "uint256",
-        "name": "user_data_id",
+        "name": "request_id",
         "type": "uint256"
       },
       {

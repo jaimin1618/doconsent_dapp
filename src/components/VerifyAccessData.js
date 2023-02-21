@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
-import DataObjectIcon from "@mui/icons-material/DataObject";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
-import CancelIcon from "@mui/icons-material/Cancel";
+
 import { toast } from "react-toastify";
 import { ColorRing } from "react-loader-spinner";
-import { InfinitySpin } from "react-loader-spinner";
 
 import Contract from "./utilities/contract/contract";
+import { useParams } from "react-router";
 
 const VerifyAccessData = () => {
+  const { data_id } = useParams();
+
   const [accessData, setAccessData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [inProgress, setInProgress] = useState(true);
@@ -137,14 +136,14 @@ const VerifyAccessData = () => {
           ) : (
             <div
               className={`flex flex-col w-full justify-center ${
-                inProgress ? "opacity-25" : ""
+                inProgress ? "opacity-100" : ""
               }`}
             >
-              <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                  <div className="overflow-x-auto">
+              <div className="overflow-x-auto sm:-mx-6 lg:-mx-8 w-full">
+                <div className="py-2 inline-block min-w-full sm:px-6 lg:px w-full">
+                  <div className="overflow-x-auto w-full">
                     <table className="min-w-full">
-                      <thead className="border-b bg-gray-800 ">
+                      <thead className="border-b bg-gray-800 w-full">
                         <tr className="">
                           <th
                             scope="col"
@@ -179,37 +178,26 @@ const VerifyAccessData = () => {
                               <button
                                 onClick={() => display_data(el)}
                                 type="button"
-                                className="inline-block mx-1 px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                                className="flex justify-center items-center mx-1 px-3 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                               >
                                 View
                               </button>
-
-                              <button
-                                onClick={() => approve_data(el)}
-                                type="button"
-                                class="inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out"
-                              >
-                                Approve Verification
-                              </button>
-                              <button
-                                onClick={() => reject_data(el)}
-                                type="button"
-                                className="inline-block mx-1 px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
-                              >
-                                Reject Verification
-                              </button>
-                            </td>
-                            <td className="text-sm text-gray-700 font-light px-6 py-4 whitespace-nowrap text-center">
-                              {/* {parseInt(el.data_verification_stage, 10) == 1 ? (
-                                parseInt(el.issuer_verification_status, 10) ==
-                                1 ? (
-                                  <VerifiedUserIcon className="text-green-700" />
-                                ) : (
-                                  <GppBadIcon className="text-red-500" />
-                                )
-                              ) : (
-                                <PendingActionsRoundedIcon />
-                              )} */}
+                              <div className="flex">
+                                <button
+                                  onClick={() => approve_data(el)}
+                                  type="button"
+                                  className="flex justify-center items-center mx-1 px-3 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out"
+                                >
+                                  Approve Verification
+                                </button>
+                                <button
+                                  onClick={() => reject_data(el)}
+                                  type="button"
+                                  className="flex justify-center items-center mx-1 px-3 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
+                                >
+                                  Reject Verification
+                                </button>
+                              </div>
                             </td>
                           </tr>
                         ))}

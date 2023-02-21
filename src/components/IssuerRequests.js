@@ -103,7 +103,11 @@ const IssuerRequests = () => {
               colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
             />
           ) : (
-            <div className={`flex flex-col w-full ${inProgress ? "opacity-25" : ""}`}>
+            <div
+              className={`flex flex-col w-full ${
+                inProgress ? "opacity-25" : ""
+              }`}
+            >
               <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
                   <div className="overflow-x-auto">
@@ -149,7 +153,7 @@ const IssuerRequests = () => {
                               {el.request_from}
                             </td>
                             <td className="text-sm text-gray-700 font-light px-6 py-4 whitespace-nowrap text-center flex justify-around">
-                              {el.isCompleted ? (
+                              {el.request_status !== 0 ? (
                                 <button
                                   disabled
                                   type="button"
