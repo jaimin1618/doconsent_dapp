@@ -200,6 +200,43 @@ async function userHasConsentIndexes() {
   return data;
 }
 
+async function makeIssuer(issuer_address) {
+  let status = false;
+  try {
+    const signer = await requestAccounts();
+    const contract = new ethers.Contract(address, ABI.abi, signer);
+    const tx = await contract.makeIssuer(issuer_address);
+    status = await tx.wait();
+    if (!status) status = false;
+  } catch (e) {
+    console.error("Error occured: ", e);
+    status = false;
+  }
+  return status;
+}
+
+async function removeIssuer(issuer_address) {
+  let status = false;
+  try {
+    const signer = await requestAccounts();
+    const contract = new ethers.Contract(address, ABI.abi, signer);
+    const tx = await contract.removeIssuer(issuer_address);
+    status = await tx.wait();
+    if (!status) status = false;
+  } catch (e) {
+    console.error("Error occured: ", e);
+    status = false;
+  }
+  return status;
+}
+
+async function getIssuerAdmins() {
+  const signer = await requestAccounts();
+  const contract = new ethers.Contract(address, ABI.abi, signer);
+  const data = await contract.getIssuerAdmins();
+  return data;
+}
+
 const _ = {
   requestAccounts,
   getOwner,
@@ -220,6 +257,9 @@ const _ = {
   issuerDataVerification,
   checkConsent,
   userHasConsentIndexes,
+  makeIssuer,
+  removeIssuer,
+  getIssuerAdmins,
 };
 
 export default _;

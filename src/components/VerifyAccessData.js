@@ -7,12 +7,24 @@ import Contract from "./utilities/contract/contract";
 import { useParams } from "react-router";
 
 const VerifyAccessData = () => {
-  const { data_id } = useParams();
-
+  const { request_id } = useParams();
   const [accessData, setAccessData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [inProgress, setInProgress] = useState(true);
   const [action, setAction] = useState("");
+
+  useEffect(() => {
+    const _ = async () => {
+      setIsLoading(true);
+      const get_request = await Contract.getRequestByID(request_id);
+      const data_id = parseInt(get_request.requested_data_id, 10);
+      const user_data = await Contract.getUserDataByID(data_id);
+      setAccessData([user_data]);
+      setIsLoading(false);
+    };
+
+    _();
+  }, []);
 
   const display_data = async (el) => {
     const cid = el.user_data_cid;
@@ -53,61 +65,6 @@ const VerifyAccessData = () => {
     }
     setInProgress(false);
   };
-
-  useEffect(() => {
-    const get_indexes = async () => {
-      const raw = await Contract.getRequestsMadeByCurrentUser();
-      const idx = raw.map((el) => parseInt(el, 10));
-
-      return idx;
-    };
-
-    const get_request_promises = async () => {
-      const idx = await get_indexes();
-      const _requestPromises = await idx.map(async (el, index) => {
-        return await Contract.getRequestByID(el);
-      });
-      return await Promise.all(_requestPromises);
-    };
-
-    const get_data_indexes = async () => {
-      const results = await get_request_promises();
-      const filtered_requests = results.filter((el) => el.request_status === 1);
-      const idx = filtered_requests.map((el) => el.requested_data_id);
-      const data_indexes = idx.map((el) => parseInt(el, 10));
-
-      const promises = data_indexes.map(async (el, index) => {
-        const addr = await Contract.getAddress();
-        const isConsent = await Contract.checkConsent(el, addr);
-        if (isConsent === true) {
-          return el;
-        }
-      });
-
-      promises.filter((el) => el !== undefined);
-      return Promise.all(promises);
-    };
-
-    const get_data_promises = async () => {
-      const _data_indexes = await get_data_indexes();
-      const _indexes = _data_indexes.filter((el) => el !== undefined);
-      // requested_data_id
-      const data = await _indexes.map(async (el, index) => {
-        return await Contract.getUserDataByID(el);
-      });
-
-      return await Promise.all(data);
-    };
-
-    const getAccessData = async () => {
-      const results = await get_data_promises();
-      setAccessData(results);
-      // console.log(results);
-      setIsLoading(false);
-    };
-
-    getAccessData();
-  }, []);
 
   return (
     <div className="h-screen flex flex-col items-center">

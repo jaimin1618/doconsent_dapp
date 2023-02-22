@@ -7,13 +7,14 @@ import HowToRegIcon from "@mui/icons-material/HowToReg";
 import FlakyIcon from "@mui/icons-material/Flaky";
 import ConnectWithoutContactIcon from "@mui/icons-material/ConnectWithoutContact";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
-import FolderSpecialIcon from "@mui/icons-material/FolderSpecial";
+import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
 import { useNavigate } from "react-router";
 import { ROLES } from "../constants";
 
 const Sidebar = ({ user_role, setIsMenuOpen }) => {
   const [navigation, setNavigation] = useState([]);
   const navigate = useNavigate();
+  // console.log(user_role);
 
   useEffect(() => {
     const holderNavigation = [
@@ -41,7 +42,7 @@ const Sidebar = ({ user_role, setIsMenuOpen }) => {
       },
     ];
 
-    const issuerNavigation = [
+    const adminNavigation = [
       {
         path: "make_request",
         linkName: "Make Request",
@@ -53,16 +54,33 @@ const Sidebar = ({ user_role, setIsMenuOpen }) => {
         element: <FactCheckIcon />,
       },
       {
-        path: "my_permissioned_data",
-        linkName: "Permissioned data",
-        element: <FolderSpecialIcon />,
+        path: "create_remove_issuer",
+        linkName: "Create/Remove Issuer",
+        element: <AddBoxOutlinedIcon />,
       },
       // { path: "validate_data", linkName: "Validate-Data" },
     ];
 
-    user_role === ROLES.ISSUER
-      ? setNavigation(issuerNavigation)
-      : setNavigation(holderNavigation);
+    const issuerNavigation = [
+      {
+        path: "make_request",
+        linkName: "Make Request",
+        element: <ConnectWithoutContactIcon />,
+      },
+      {
+        path: "fulfilled_requests",
+        linkName: "Requests",
+        element: <FactCheckIcon />,
+      },
+    ];
+
+    if (user_role === ROLES.ADMIN) {
+      setNavigation(adminNavigation);
+    } else if (user_role === ROLES.ISSUER) {
+      setNavigation(issuerNavigation);
+    } else {
+      setNavigation(holderNavigation);
+    }
   }, [user_role]);
 
   return (

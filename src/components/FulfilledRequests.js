@@ -4,15 +4,13 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import { ColorRing } from "react-loader-spinner";
 
-import { DropDown } from "./DropDown";
 import Contract from "./utilities/contract/contract";
 import { RequestFilter, RequestFilterIndex } from "../constants";
 import FilterDropDown from "./FilterDropDown";
-
-import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
-import GppBadIcon from "@mui/icons-material/GppBad";
-import PendingActionsRoundedIcon from "@mui/icons-material/PendingActionsRounded";
 import { useNavigate } from "react-router";
+
+import NewReleasesOutlinedIcon from "@mui/icons-material/NewReleasesOutlined";
+import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined";
 
 // getIssuerFulfilledRequests
 const FulfilledRequests = () => {
@@ -231,11 +229,6 @@ const FulfilledRequests = () => {
                                   </td>
                                   <td className="text-sm text-gray-700 font-light px-6 text-center py-4 whitespace-nowrap">
                                     {displayStatusIcon(el.request_status)}
-                                    {/* {el.request_status === 0
-                                    ? "PENDING"
-                                    : el.request_status === 1
-                                    ? "ACCPTED"
-                                    : "REJECTED"} */}
                                   </td>
                                   <td className="text-sm text-gray-700 font-light px-6 text-center py-4 whitespace-nowrap">
                                     {get_datetime(
@@ -248,18 +241,19 @@ const FulfilledRequests = () => {
                                     )}
                                   </td>
                                   <td className="text-sm text-gray-700 font-light px-6 text-center py-4 whitespace-nowrap">
-                                    {el.request_status === 1 ? (
+                                    {false === el.isVerificationCompleted &&
+                                    el.request_status === 0 ? (
                                       <button
                                         onClick={() =>
                                           navigate(
                                             `/my_permissioned_data/${parseInt(
-                                              el.requested_data_id,
+                                              el.request_id,
                                               10
                                             )}`
                                           )
                                         }
                                         type="button"
-                                        className="inline-block mx-1 px-6 py-2.5 bg-green-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-900 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
+                                        className="flex justify-center items-center mx-1 px-3 py-2.5 bg-green-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-900 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
                                       >
                                         View
                                       </button>
@@ -267,9 +261,19 @@ const FulfilledRequests = () => {
                                       <button
                                         disabled
                                         type="button"
-                                        className="inline-block opacity-50 mx-1 px-6 py-2.5 bg-green-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-900 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
+                                        className="flex justify-center items-center opacity-50 mx-1 px-3 py-2.5 bg-green-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-900 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
                                       >
-                                        View
+                                        {el.request_status === 1 ? (
+                                          <>
+                                            <VerifiedOutlinedIcon />
+                                            &nbsp; APPROVED
+                                          </>
+                                        ) : (
+                                          <>
+                                            <NewReleasesOutlinedIcon />
+                                            REJECTED
+                                          </>
+                                        )}
                                       </button>
                                     )}
                                   </td>

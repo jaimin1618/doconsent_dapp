@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import GppBadIcon from "@mui/icons-material/GppBad";
 import PendingActionsRoundedIcon from "@mui/icons-material/PendingActionsRounded";
