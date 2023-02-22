@@ -4,23 +4,50 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import PendingActionsIcon from "@mui/icons-material/PendingActions";
 import { ColorRing } from "react-loader-spinner";
 
-import { DropDown } from "./DropDown";
 import Contract from "./utilities/contract/contract";
 import { RequestFilter, RequestFilterIndex } from "../constants";
+import FilterDropDown from "./FilterDropDown";
+import { useNavigate } from "react-router";
+
+import NewReleasesOutlinedIcon from "@mui/icons-material/NewReleasesOutlined";
+import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined";
 
 // getIssuerFulfilledRequests
 const FulfilledRequests = () => {
   const [filter, setFilter] = useState(RequestFilter.ALL);
   const [requests, setRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+
+  const get_datetime = (time) => {
+    const d = new Date(0);
+    d.setUTCSeconds(time);
+    const result = d.toLocaleDateString() + " " + d.toLocaleTimeString();
+    return result;
+  };
 
   const displayStatusIcon = (status) => {
     if (status === 0) {
-      return <PendingActionsIcon className="text-blue-600" />;
+      return (
+        <span className="font-semibold text-sm uppercase">
+          <PendingActionsIcon className="text-blue-700" />
+          &nbsp;Pending
+        </span>
+      );
     } else if (status === 1) {
-      return <CheckBoxIcon className="text-green-700" />;
+      return (
+        <span className="font-semibold text-sm uppercase">
+          <CheckBoxIcon className="text-green-700" />
+          &nbsp;Approved
+        </span>
+      );
     } else if (status === 2) {
-      return <CancelIcon className="text-red-500" />;
+      return (
+        <span className="font-semibold text-sm uppercase">
+          <CancelIcon className="text-red-700" />
+          &nbsp;Rejected
+        </span>
+      );
     }
   };
 
@@ -66,24 +93,30 @@ const FulfilledRequests = () => {
 
     const get_requests = async () => {
       const results = await get_promises();
+      var filtered_results = [];
       if (filter === RequestFilter.ALL) {
-        setRequests(results);
+        filtered_results = results;
+        // setRequests(results);
       } else if (filter === RequestFilter.ACCEPTED_OR_REJECTED) {
-        const filtered_results = results.filter(
+        filtered_results = results.filter(
           (el) =>
             el.request_status === RequestFilterIndex[RequestFilter.ACCEPTED] ||
             el.request_status === RequestFilterIndex[RequestFilter.REJECTED]
         );
-        console.log(filtered_results);
-        setRequests(filtered_results);
+        // console.log(filtered_results);
+        // setRequests(filtered_results);
       } else {
-        const filtered_results = results.filter(
+        filtered_results = results.filter(
           (el) => el.request_status === RequestFilterIndex[filter]
         );
+        // console.log(filtered_results);
+        // setRequests(filtered_results);
+      }
+      setTimeout(() => {
+        setIsLoading(false);
         console.log(filtered_results);
         setRequests(filtered_results);
-        setIsLoading(false);
-      }
+      }, 1000);
     };
 
     get_requests();
@@ -91,8 +124,15 @@ const FulfilledRequests = () => {
 
   return (
     <div className="">
-      <DropDown filter={filter} setFilter={setFilter} />
-      <div className="flex justify-center items-center">
+      {/* <DropDown filter={filter} setFilter={setFilter} /> */}
+      <FilterDropDown filter={filter} setFilter={setFilter} />
+      <div
+        className={
+          isLoading
+            ? "h-screen flex justify-center items-start"
+            : "flex justify-center items-center w-full"
+        }
+      >
         {isLoading ? (
           <ColorRing
             className="w-full h-full bg-blue-600"
@@ -105,54 +145,151 @@ const FulfilledRequests = () => {
             colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
           />
         ) : (
-          ""
-        )}
-      </div>
-      <div>
-        <div className="flex items-start justify-center min-h-screen p-3 my-3">
-          <div className="flex flex-col border-gray-300 border bg-white divide-y rounded-lg flex-none w-full md:w-1/2 lg:w-1/2">
-            <div className="flex flex-col space-y-2 divide-y">
-              {/* SHOW REQUESTS */}
-              {requests.map((el, idx) => (
-                <div
-                  key={idx}
-                  className={`flex justify-between space-x-3 items-center p-3 ${
-                    el.isCompleted ? " outline-green-700 outline-3 outline" : ""
+          <div className="w-full">
+            <div className="flex items-start justify-center min-h-screen p-3 my-3">
+              <div className="flex flex-col border-gray-300 bg-white divide-y rounded-lg flex-none w-full md:w-2/3 lg:w-2/3">
+                <div className="flex flex-col space-y-2 divide-y">
+                  {/* SHOW REQUESTS */}
+
+                  <div className="flex flex-col w-full">
+                    {/* <div
+                  className={`flex flex-col w-full ${
+                    inProgress ? "opacity-25" : ""
                   }`}
-                >
-                  <div className="flex items-center space-x-4">
-                    <img
-                      src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                      className="rounded-full h-14 w-20"
-                      alt=""
-                    />
-                    <div className="flex flex-col space-y-3 text-sm w-full">
-                      <p>
-                        Requested for:&nbsp;
-                        <span className="font-semibold">
-                          {el.requested_data_name.substr(0, 30)}
-                        </span>
-                      </p>
-                      <p>
-                        Requested by:&nbsp;
-                        <span className="font-semibold">
-                          {el.request_from.substr(0, 30)}...
-                        </span>
-                      </p>
+                > */}
+                    <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                      <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                        <div className="overflow-x-auto">
+                          <table className="min-w-full">
+                            <thead className="border-b bg-gray-800 ">
+                              <tr className="">
+                                <th
+                                  scope="col"
+                                  className="text-sm font-semibold text-gray-200 px-6 py-4 text-center"
+                                >
+                                  {/* request ID */}#
+                                </th>
+                                <th
+                                  scope="col"
+                                  className="text-sm font-semibold text-gray-200 px-6 py-4 text-center"
+                                >
+                                  {/* requested data name */}
+                                  Data name
+                                </th>
+                                <th
+                                  scope="col"
+                                  className="text-sm text-center font-semibold text-gray-200 px-6 py-4"
+                                >
+                                  {/* request to (public address) */}
+                                  Requested to
+                                </th>
+                                <th
+                                  scope="col"
+                                  className="text-sm font-semibold text-gray-200 px-6 py-4 text-center"
+                                >
+                                  {/* request status (is approved by HOLDER or NOT or pending) */}
+                                  request status
+                                </th>
+
+                                <th
+                                  scope="col"
+                                  className="text-sm font-semibold text-gray-200 px-6 py-4 text-center"
+                                >
+                                  {/* request created time */}
+                                  datetime created
+                                </th>
+
+                                <th
+                                  scope="col"
+                                  className="text-sm font-semibold text-gray-200 px-6 py-4 text-center"
+                                >
+                                  {/* request approved time */}
+                                  datetime approved
+                                </th>
+                                <th
+                                  scope="col"
+                                  className="text-sm font-semibold text-gray-200 px-6 py-4 text-center"
+                                >
+                                  {/* button to view approved data name */}
+                                  View Access
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {requests.map((el, idx) => (
+                                <tr key={idx} className="bg-white border-b">
+                                  <td className="px-6 py-4 whitespace-nowrap text-sm text-center font-medium text-gray-200">
+                                    {parseInt(el.request_id, 10)}
+                                  </td>
+                                  <td className="text-sm text-gray-700 font-light px-6 text-center py-4 whitespace-nowrap">
+                                    {el.requested_data_name}
+                                  </td>
+                                  <td className="text-sm text-gray-700 font-light px-6 text-center py-4 whitespace-nowrap">
+                                    {el.request_to}
+                                  </td>
+                                  <td className="text-sm text-gray-700 font-light px-6 text-center py-4 whitespace-nowrap">
+                                    {displayStatusIcon(el.request_status)}
+                                  </td>
+                                  <td className="text-sm text-gray-700 font-light px-6 text-center py-4 whitespace-nowrap">
+                                    {get_datetime(
+                                      parseInt(el.created_datetime, 10)
+                                    )}
+                                  </td>
+                                  <td className="text-sm text-gray-700 font-light px-6 text-center py-4 whitespace-nowrap">
+                                    {get_datetime(
+                                      parseInt(el.approved_datetime, 10)
+                                    )}
+                                  </td>
+                                  <td className="text-sm text-gray-700 font-light px-6 text-center py-4 whitespace-nowrap">
+                                    {false === el.isVerificationCompleted &&
+                                    el.request_status === 0 ? (
+                                      <button
+                                        onClick={() =>
+                                          navigate(
+                                            `/my_permissioned_data/${parseInt(
+                                              el.request_id,
+                                              10
+                                            )}`
+                                          )
+                                        }
+                                        type="button"
+                                        className="flex justify-center items-center mx-1 px-3 py-2.5 bg-green-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-900 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
+                                      >
+                                        View
+                                      </button>
+                                    ) : (
+                                      <button
+                                        disabled
+                                        type="button"
+                                        className="flex justify-center items-center opacity-50 mx-1 px-3 py-2.5 bg-green-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-900 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
+                                      >
+                                        {el.request_status === 1 ? (
+                                          <>
+                                            <VerifiedOutlinedIcon />
+                                            &nbsp; APPROVED
+                                          </>
+                                        ) : (
+                                          <>
+                                            <NewReleasesOutlinedIcon />
+                                            REJECTED
+                                          </>
+                                        )}
+                                      </button>
+                                    )}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div>{displayStatusIcon(el.request_status)}</div>
                 </div>
-              ))}
-              {/* SHOW REQUESTS */}
+              </div>
             </div>
-            {/* <div className="p-4">
-            <button className="w-full border p-2 rounded-md hover:opacity-60 transition">
-              View all
-            </button>
-          </div> */}
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

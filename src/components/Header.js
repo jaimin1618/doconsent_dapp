@@ -21,8 +21,6 @@ const Header = ({ user_role }) => {
     const issuerNavigation = [
       { path: "make_request", linkName: "Make Request" },
       { path: "fulfilled_requests", linkName: "Requests" },
-      { path: "my_permissioned_data", linkName: "Permissioned data" },
-      // { path: "validate_data", linkName: "Validate-Data" },
     ];
 
     user_role === ROLES.ISSUER

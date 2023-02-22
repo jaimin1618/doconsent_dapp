@@ -22,6 +22,7 @@ import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Table from "./components/Table";
+import CreateRevokeIssuer from "./components/CreateRevokeIssuer";
 
 const App = () => {
   const [role, setRole] = useState(ROLES.HOLDER);
@@ -33,7 +34,15 @@ const App = () => {
       const user_address = await Contract.getAddress();
       setUserAccount(user_address);
       const isIssuer = await Contract.isCurrentUserIssuer(user_address);
-      isIssuer ? setRole(ROLES.ISSUER) : setRole(ROLES.HOLDER);
+      const contractAdmin = process.env.REACT_APP_CONTRACT_OWNER;
+
+      if (user_address === contractAdmin) {
+        setRole(ROLES.ADMIN);
+      } else if (isIssuer) {
+        setRole(ROLES.ISSUER);
+      } else {
+        setRole(ROLES.HOLDER);
+      }
     };
     setUserRole();
 
@@ -43,19 +52,10 @@ const App = () => {
         const accounts = await provider.send("eth_requestAccounts", []);
         setUserAccount(accounts[0]);
         setUserRole();
+        window.location.href = "/";
       });
     }
     onAccountChange();
-
-    // const onAccountChange = async (accounts) => {
-    //   console.log("acc. changed");
-    //   setUserAccount(accounts[0]);
-    //   setUserRole();
-    // };
-    // window.ethereum.on("accountsChanged", onAccountChange);
-
-    // return async () =>
-    //   window.ethereum.removeListener("accountsChanged", onAccountChange);
   }, []);
 
   return (
@@ -65,7 +65,11 @@ const App = () => {
         <ToastContainer />
 
         <div className="flex">
-          {isMenuOpen ? <Sidebar user_role={role} /> : ""}
+          {isMenuOpen ? (
+            <Sidebar setIsMenuOpen={setIsMenuOpen} user_role={role} />
+          ) : (
+            ""
+          )}
           <div className="w-full">
             <Routes>
               <Route path="/" element={<Main />} />
@@ -89,13 +93,17 @@ const App = () => {
                   {/* ISSUER Routes  */}
 
                   <Route
-                    path="/my_permissioned_data"
+                    path="/my_permissioned_data/:request_id"
                     element={<VerifyAccessData />}
                   />
                   <Route path="/make_request" element={<MakeRequest />} />
                   <Route
                     path="/fulfilled_requests"
                     element={<FulfilledRequests />}
+                  />
+                  <Route
+                    path="/create_remove_issuer"
+                    element={<CreateRevokeIssuer />}
                   />
                   <Route path="/*" element={<PageNotFound />} />
                 </>

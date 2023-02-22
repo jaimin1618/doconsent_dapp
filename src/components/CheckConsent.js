@@ -3,6 +3,7 @@ import Contract from "./utilities/contract/contract";
 
 import WarningAlert from "./WarningAlert";
 import InfoAlert from "./InfoAlert";
+import InfoIcon from "@mui/icons-material/Info";
 
 const CheckConsent = () => {
   const [options, setOptions] = useState([]);
@@ -53,7 +54,7 @@ const CheckConsent = () => {
   }, []);
 
   return (
-    <div className="w-full sm:p-4">
+    <div className="w-full shadow-md rounded-md sm:p-4">
       <div className="p-8 rounded-xl shadow-sm bg-white">
         <div className="mb-5">
           <label
@@ -67,7 +68,7 @@ const CheckConsent = () => {
             onChange={(e) => setSelectedOption(e.target.value)}
             defaultValue={"DEFAULT"}
             name="dataNames"
-            className="w-full px-6 py-3"
+            className="w-full px-3 py-3 rounded-md bg-zinc-50 border-none shadow-md"
           >
             <option value="DEFAULT" disabled>
               Choose a data ...
@@ -79,44 +80,35 @@ const CheckConsent = () => {
             ))}
           </select>
         </div>
-        <span className="text-2xl mb-2">
-          <i>Enter recipient address:</i>
-          <span className="text-3xl font-bold">
-            <input
-              type="text"
-              id="input-group-1"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="Enter recipient address"
-              onChange={(e) => setRecipientAddress(e.target.value)}
-            />
+        <div>
+          <span className="text-xl mb-2">
+            <i>Enter recipient's public address:</i>
+            <span className="text-3xl font-bold">
+              <input
+                type="text"
+                id="input-group-1"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-5 py-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="e.g. 0x90F79bf6EB2c4f..."
+                onChange={(e) => setRecipientAddress(e.target.value)}
+              />
+            </span>
           </span>
-        </span>
+        </div>
 
         {/* SHOW STATUS */}
         <div className="my-2">
           <InfoAlert show={showInfoAlert} setShow={setShowInfoAlert} />
           <WarningAlert show={showWarning} setShow={setShowWarningAlert} />
         </div>
-        {/* <p className="text-base">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-        Accusantium alias minima rerum. Soluta assumenda eveniet
-        obcaecati maxime temporibus qui ab voluptas doloremque illo,
-        odio optio ex, atque numquam tempore quis.
-      </p> */}
+
         <button
           onClick={() => runCheckConsent()}
-          className="w-1/4 my-4 block uppercase mx-auto shadow bg-indigo-800 hover:bg-indigo-700 focus:shadow-outline focus:outline-none text-white text-xs py-3 px-10 rounded"
-        >
-          Check Consent
-        </button>
-
-        {/* <button
-          onClick={() => runCheckConsent()}
           type="button"
-          class="inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+          class="flex mt-5 justify-center items-center px-6 py-2.5 bg-blue-400 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-500 hover:shadow-lg focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-600 active:shadow-lg transition duration-150 ease-in-out"
         >
-          Give consent
-        </button> */}
+          <InfoIcon />
+          &nbsp;Info
+        </button>
       </div>
     </div>
   );
