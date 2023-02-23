@@ -242,7 +242,7 @@ const FulfilledRequests = () => {
                                   </td>
                                   <td className="text-sm text-gray-700 font-light px-6 text-center py-4 whitespace-nowrap">
                                     {false === el.isVerificationCompleted &&
-                                    el.request_status === 0 ? (
+                                    el.request_status === 1 ? (
                                       <button
                                         onClick={() =>
                                           navigate(
@@ -261,19 +261,9 @@ const FulfilledRequests = () => {
                                       <button
                                         disabled
                                         type="button"
-                                        className="flex justify-center items-center opacity-50 mx-1 px-3 py-2.5 bg-green-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-900 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
+                                        className="flex opacity-50 justify-center items-center mx-1 px-3 py-2.5 bg-green-700 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-900 hover:shadow-lg focus:bg-green-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-800 active:shadow-lg transition duration-150 ease-in-out"
                                       >
-                                        {el.request_status === 1 ? (
-                                          <>
-                                            <VerifiedOutlinedIcon />
-                                            &nbsp; APPROVED
-                                          </>
-                                        ) : (
-                                          <>
-                                            <NewReleasesOutlinedIcon />
-                                            REJECTED
-                                          </>
-                                        )}
+                                        View
                                       </button>
                                     )}
                                   </td>
