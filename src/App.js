@@ -18,7 +18,6 @@ import Contract from "../src/components/utilities/contract/contract";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import FileUpload from "./components/FileUpload";
-import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Table from "./components/Table";
@@ -61,15 +60,15 @@ const App = () => {
   return (
     <Router>
       <div className="">
-        <Navbar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+        <Navbar  user_role={role}/>
         <ToastContainer />
 
         <div className="flex">
-          {isMenuOpen ? (
+          {/* {isMenuOpen ? (
             <Sidebar setIsMenuOpen={setIsMenuOpen} user_role={role} />
           ) : (
             ""
-          )}
+          )} */}
           <div className="w-full">
             <Routes>
               <Route path="/" element={<Main />} />
