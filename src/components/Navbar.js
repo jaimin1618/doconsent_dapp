@@ -11,7 +11,7 @@ const Navbar = ({ isMenuOpen, setIsMenuOpen }) => {
     <nav className="shadow-lg w-full flex items-center justify-around">
       <div className="lg:w-1/2 w-2/3 flex my-3 lg:my-auto">
         <a href="#" onClick={() => navigate("/")} rel="home">
-          <img className="w-2/4" src={Logo} />
+        DOCONSENTWEB3
         </a>
       </div>
       <div className="bg-blue-500 rounded text-white p-2">
