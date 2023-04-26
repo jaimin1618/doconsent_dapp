@@ -64,11 +64,7 @@ const App = () => {
         <ToastContainer />
 
         <div className="flex">
-          {/* {isMenuOpen ? (
-            <Sidebar setIsMenuOpen={setIsMenuOpen} user_role={role} />
-          ) : (
-            ""
-          )} */}
+         
           <div className="w-full">
             <Routes>
               <Route path="/" element={<Main />} />

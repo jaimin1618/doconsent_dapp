@@ -86,7 +86,7 @@ const Navbar = ({ user_role }) => {
     }
   }, [user_role]);
   return (
-    <nav className="bg-gray-800 shadow-lg w-full flex items-center justify-around h-14">
+    <nav className="bg-gray-800 shadow-lg w-full flex items-center justify-around h-14" style={{ backgroundColor: "#282930" }}>
       <div className=" flex my-3 lg:my-auto">
         <a href="#" onClick={() => navigate("/")} rel="home">
           <Typography
