@@ -17,6 +17,7 @@ import { ROLES } from "../constants";
 import Contract from "./utilities/contract/contract";
 
 const Navbar = ({ user_role }) => {
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const [navigation, setNavigation] = useState([]);
   useEffect(() => {
@@ -86,8 +87,11 @@ const Navbar = ({ user_role }) => {
     }
   }, [user_role]);
   return (
-    <nav className="bg-gray-800 shadow-lg w-full flex items-center justify-around h-14" style={{ backgroundColor: "#282930" }}>
-      <div className=" flex my-3 lg:my-auto">
+    <nav
+      className="bg-gray-800 shadow-lg w-full flex flex-wrap items-center justify-between h-14"
+      style={{ backgroundColor: "#282930" }}
+    >
+      <div className="flex my-3 lg:my-auto">
         <a href="#" onClick={() => navigate("/")} rel="home">
           <Typography
             style={{
@@ -98,26 +102,65 @@ const Navbar = ({ user_role }) => {
               textFillColor: "transparent",
               opacity: "0.8",
               letterSpacing: ".2rem",
-              fontSize: "1 rem",
+              fontSize: "1rem",
               fontWeight: "bold",
+              marginLeft: "1rem",
             }}
           >
             DOCONSENTWEB3
           </Typography>
         </a>
       </div>
-      <div className="flex flex-wrap items-center justify-around">
-        {navigation.map((el, idx) => (
-          <button
-            onClick={() => {
-              navigate(el.path);
-              
-            }}
-            className="flex items-center space-x-4 hover:underline hover:text-gray-400 underline-offset-8 px-4 py-2 text-black font-semibold font-sans"
+
+      <div className="flex items-center justify-between">
+        <button
+          className="block lg:hidden px-3 py-2 text-gray-400 hover:text-gray-100 focus:text-gray-100 focus:outline-none"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <svg
+            className="h-4 w-4 fill-current"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <Typography sx={{ color: "gray" }}>{el.linkName}</Typography>
-          </button>
-        ))}
+            <title>Menu</title>
+            <path d="M0 3h20v2H0zm0 5h20v2H0zm0 5h20v2H0z" />
+          </svg>
+        </button>
+
+        <div className={`lg:flex ${isOpen ? "block" : "hidden"}`} style={{ zIndex: 999 }}>
+  {navigation.map((el, idx) => (
+    <button
+      key={idx}
+      onClick={() => {
+        navigate(el.path);
+        setIsOpen(false);
+      }}
+      className="block lg:inline-block text-gray-100 hover:text-gray-400 px-3 py-2 font-semibold font-sans"
+    >
+      <Typography sx={{ color: "gray" }}>{el.linkName}</Typography>
+    </button>
+  ))}
+  <button
+    className="block lg:hidden text-gray-100 hover:text-gray-400 px-3 py-2 font-semibold font-sans"
+    onClick={() => setIsOpen(false)}
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M6 18L18 6M6 6l12 12"
+      />
+    </svg>
+  </button>
+</div>
+
       </div>
 
       <div>
@@ -130,6 +173,7 @@ const Navbar = ({ user_role }) => {
             backgroundColor: "#242428",
             bordercolor: "gray",
             border: "1px solid gray",
+            marginRight: "1rem",
           }}
         >
           Connect Metamask &nbsp;

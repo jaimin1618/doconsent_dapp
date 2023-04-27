@@ -42,7 +42,7 @@ const Main = () => {
   Secure file storage using blockchain
 </Typography>
 
-    <Typography sx={{fontSize:"1.5rem",color:"gray"}}>Store your files on the blockchain and share them with your friends</Typography>
+    <Typography sx={{fontSize:"1.5rem",color:"gray" ,textAlign:"center", fontFamily: "Derby"}}>Store your files on the blockchain and share them with your friends</Typography>
     
 </div>
 

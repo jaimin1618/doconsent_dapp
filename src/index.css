@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media only screen and (max-width: 767px) {
+  .box-left {
+    display: none;
+  }
+
+  .box-right {
+    flex: 1;
+    margin: 20px;
+    border-radius: 30px;
+    background-color: #1d1d1d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+  }
+
+  .box-right > :first-child {
+    font-size: 3rem;
+  }
+
+  .box-right > :last-child {
+    font-size: 1rem;
+  }
+}
