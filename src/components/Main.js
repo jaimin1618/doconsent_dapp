@@ -42,9 +42,27 @@ const Main = () => {
           flexDirection: "column",
         }}
       >
+        
         <Typography
           sx={{
             fontSize: "5rem",
+            color: "whitesmoke",
+            textAlign: "center",
+            background: "linear-gradient(to right, #8A2BE2, #DA70D6)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+            textFillColor: "transparent",
+            opacity: "0.8",
+            letterSpacing: ".2rem",
+            fontWeight: "bold",
+          }}
+        >
+         DOCONSENTWEB3
+        </Typography>
+        <Typography
+          sx={{
+            fontSize: "4rem",
             color: "whitesmoke",
             textAlign: "center",
             fontFamily: "Derby",
@@ -52,17 +70,10 @@ const Main = () => {
         >
           Secure file storage using blockchain
         </Typography>
+        
+       
 
-        <Typography
-          sx={{
-            fontSize: "1.5rem",
-            color: "gray",
-            textAlign: "center",
-            fontFamily: "Derby",
-          }}
-        >
-          Store your files on the blockchain and share them with your friends
-        </Typography>
+        
       </div>
     </div>
   );

@@ -130,18 +130,18 @@ const ShowData = () => {
               colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
             />
           ) : (
-            <div className={`flex flex-col w-full ${inProgress ? "opacity-25" : ""}`}>
+            <div className={` flex flex-col w-full ${inProgress ? "opacity-25" : ""}`} style={{marginTop:"100px"}}>
               <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                  <div className="overflow-x-auto">
-                    <table className="min-w-full">
-                      <thead className="border-b bg-gray-800 ">
-                        <tr className="">
+                  <div className="overflow-x-auto" style={{borderRadius:"20px"}}>
+                    <table className="min-w-full " >
+                      <thead className="  my-component  rounded-t-lg " >
+                        <tr className="border-b" style={{borderColor:"#808080"}}>
                           <th
                             scope="col"
                             className="text-sm font-semibold text-gray-200 px-6 py-4 text-center"
                           >
-                            #
+                            Data ID
                           </th>
                           <th
                             scope="col"
@@ -165,14 +165,14 @@ const ShowData = () => {
                       </thead>
                       <tbody>
                         {cards.map((el, idx) => (
-                          <tr key={idx} className="bg-white border-b">
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-center font-medium text-gray-200">
+                          <tr key={idx} className="my-component   rounded-t-lg"  >
+                            <td className="px-6 py-4 whitespace-nowrap text-sm text-center font-medium text-gray-200" >
                               {parseInt(el.user_data_id, 10)}
                             </td>
-                            <td className="text-sm text-gray-700 font-light px-6 text-center py-4 whitespace-nowrap">
+                            <td className="text-sm text-white font-semibold px-6 text-center py-4 whitespace-nowrap">
                               {el.user_data_name}
                             </td>
-                            <td className="text-sm text-gray-700 font-light px-6 py-4 whitespace-nowrap text-center flex justify-around">
+                            <td className="text-sm text-gray-700 font-semibold px-6 py-4 whitespace-nowrap text-center flex justify-around">
                               <button
                               
                                 onClick={() => display_data(el)}
@@ -195,7 +195,7 @@ const ShowData = () => {
                                 Delete
                               </button>
                             </td>
-                            <td className="text-sm text-gray-700 font-light px-6 py-4 whitespace-nowrap text-center">
+                            <td className="text-sm text-gray-700 font-semibold px-6 py-4 whitespace-nowrap text-center">
                               {parseInt(el.data_verification_stage, 10) == 1 ? (
                                 parseInt(el.issuer_verification_status, 10) ==
                                 1 ? (
@@ -204,7 +204,7 @@ const ShowData = () => {
                                   <GppBadIcon className="text-red-500" />
                                 )
                               ) : (
-                                <PendingActionsRoundedIcon />
+                                <PendingActionsRoundedIcon className="text-white" />
                               )}
                             </td>
                           </tr>

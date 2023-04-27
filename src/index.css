@@ -1,7 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+body{
+    background-color: #282930;
+}
+.my-component {
+    background-color: rgba(255, 255, 255, 0.09);
+   
+   
+  }
+  .table-header {
+    border-radius: 10px;
+  }
+  
 @media only screen and (max-width: 767px) {
   .box-left {
     margin: 20px;
