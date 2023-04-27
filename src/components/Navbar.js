@@ -91,7 +91,7 @@ const Navbar = ({ user_role }) => {
       className="bg-gray-800 shadow-lg w-full flex flex-wrap items-center justify-between h-14"
       style={{ backgroundColor: "#282930" }}
     >
-      <div className="flex my-3 lg:my-auto">
+      <div className="flex my-3 lg:my-auto ">
         <a href="#" onClick={() => navigate("/")} rel="home">
           <Typography
             style={{
@@ -127,40 +127,42 @@ const Navbar = ({ user_role }) => {
           </svg>
         </button>
 
-        <div className={`lg:flex ${isOpen ? "block" : "hidden"}`} style={{ zIndex: 999 }}>
-  {navigation.map((el, idx) => (
-    <button
-      key={idx}
-      onClick={() => {
-        navigate(el.path);
-        setIsOpen(false);
-      }}
-      className="block lg:inline-block text-gray-100 hover:text-gray-400 px-3 py-2 font-semibold font-sans"
-    >
-      <Typography sx={{ color: "gray" }}>{el.linkName}</Typography>
-    </button>
-  ))}
-  <button
-    className="block lg:hidden text-gray-100 hover:text-gray-400 px-3 py-2 font-semibold font-sans"
-    onClick={() => setIsOpen(false)}
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-6 w-6"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M6 18L18 6M6 6l12 12"
-      />
-    </svg>
-  </button>
-</div>
-
+        <div
+          className={`lg:flex ${isOpen ? "block" : "hidden"}`}
+          style={{ zIndex: 999 }}
+        >
+          {navigation.map((el, idx) => (
+            <button
+              key={idx}
+              onClick={() => {
+                navigate(el.path);
+                setIsOpen(false);
+              }}
+              className="block lg:inline-block text-gray-100 hover:text-gray-400 px-3 py-2 font-semibold font-sans"
+            >
+              <Typography sx={{ color: "gray" }}>{el.linkName}</Typography>
+            </button>
+          ))}
+          <button
+            className="block lg:hidden text-gray-100 hover:text-gray-400 px-3 py-2 font-semibold font-sans"
+            onClick={() => setIsOpen(false)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="gray"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div>
