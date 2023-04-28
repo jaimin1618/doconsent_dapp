@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import Contract from "./utilities/contract/contract";
 import { ColorRing } from "react-loader-spinner";
 import { InfinitySpin } from "react-loader-spinner";
+import { Typography } from "@mui/material";
 
 const ShowData = () => {
   const [cards, setCards] = useState([]);
@@ -130,91 +131,144 @@ const ShowData = () => {
               colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
             />
           ) : (
-            <div className={`flex flex-col w-full ${inProgress ? "opacity-25" : ""}`}>
-              <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
-                  <div className="overflow-x-auto">
-                    <table className="min-w-full">
-                      <thead className="border-b bg-gray-800 ">
-                        <tr className="">
-                          <th
-                            scope="col"
-                            className="text-sm font-semibold text-gray-200 px-6 py-4 text-center"
+            <>
+              <div
+                className={` flex flex-col w-full ${
+                  inProgress ? "opacity-25" : ""
+                }`}
+                style={{ marginTop: "50px" }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "1.8rem",
+                    color: "whitesmoke",
+                    textAlign: "center",
+                    background: "linear-gradient(to right, red,  #DA70D6)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    textFillColor: "transparent",
+                    opacity: "0.8",
+                    letterSpacing: ".5rem",
+                    fontWeight: "bold",
+                    marginBottom: "20px",
+                  }}
+                >
+                  MY FILES
+                </Typography>
+                <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                  <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                    <div
+                      className="overflow-x-auto "
+                      style={{ borderRadius: "20px" }}
+                    >
+                      <table className="min-w-full ">
+                        <thead className="  my-component example  rounded-t-lg ">
+                          <tr
+                            className="border-b"
+                            style={{ borderColor: "#808080" }}
                           >
-                            #
-                          </th>
-                          <th
-                            scope="col"
-                            className="text-sm font-semibold text-gray-200 px-6 py-4 text-center"
-                          >
-                            Data name
-                          </th>
-                          <th
-                            scope="col"
-                            className="text-sm text-center font-semibold text-gray-200 px-6 py-4"
-                          >
-                            Actions
-                          </th>
-                          <th
-                            scope="col"
-                            className="text-sm font-semibold text-gray-200 px-6 py-4 text-center"
-                          >
-                            Verified
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {cards.map((el, idx) => (
-                          <tr key={idx} className="bg-white border-b">
-                            <td className="px-6 py-4 whitespace-nowrap text-sm text-center font-medium text-gray-200">
-                              {parseInt(el.user_data_id, 10)}
-                            </td>
-                            <td className="text-sm text-gray-700 font-light px-6 text-center py-4 whitespace-nowrap">
-                              {el.user_data_name}
-                            </td>
-                            <td className="text-sm text-gray-700 font-light px-6 py-4 whitespace-nowrap text-center flex justify-around">
-                              <button
-                              
-                                onClick={() => display_data(el)}
-                                type="button"
-                                className="inline-block mx-1 px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-                              >
-                                View
-                              </button>
-                              <button
-                                type="button"
-                                className="inline-block mx-1 px-6 py-2.5 bg-yellow-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-700 active:shadow-lg transition duration-150 ease-in-out"
-                              >
-                                Edit
-                              </button>
-                              <button
-                                onClick={() => delete_data(el)}
-                                type="button"
-                                className="inline-block mx-1 px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out"
-                              >
-                                Delete
-                              </button>
-                            </td>
-                            <td className="text-sm text-gray-700 font-light px-6 py-4 whitespace-nowrap text-center">
-                              {parseInt(el.data_verification_stage, 10) == 1 ? (
-                                parseInt(el.issuer_verification_status, 10) ==
-                                1 ? (
-                                  <VerifiedUserIcon className="text-green-700" />
-                                ) : (
-                                  <GppBadIcon className="text-red-500" />
-                                )
-                              ) : (
-                                <PendingActionsRoundedIcon />
-                              )}
-                            </td>
+                            <th
+                              scope="col"
+                              className="text-sm font-bold text-gray-200 px-6 py-4 text-center"
+                            >
+                              DATA ID
+                            </th>
+                            <th
+                              scope="col"
+                              className="text-sm font-bold text-gray-200 px-6 py-4 text-center"
+                            >
+                              DATA NAME
+                            </th>
+                            <th
+                              scope="col"
+                              className="text-sm text-center font-bold text-gray-200 px-6 py-4"
+                            >
+                              ACTIONS
+                            </th>
+                            <th
+                              scope="col"
+                              className="text-sm font-bold text-gray-200 px-6 py-4 text-center"
+                            >
+                              VERIFICATION STATUS
+                            </th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {cards.map((el, idx) => (
+                            <tr
+                              key={idx}
+                              className="my-component  example  rounded-t-lg"
+                            >
+                              <td className="px-6 py-4 whitespace-nowrap text-sm text-center font-medium text-gray-200">
+                                {parseInt(el.user_data_id, 10)}
+                              </td>
+                              <td className="text-sm text-white font-semibold px-6 text-center py-4 whitespace-nowrap">
+                                {el.user_data_name}
+                              </td>
+                              <td className="text-sm text-gray-700 font-semibold px-6 py-4 whitespace-nowrap text-center flex justify-around">
+                                <button
+                                  onClick={() => display_data(el)}
+                                  type="button"
+                                  className="inline-block mx-1 px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
+                                  style={{
+                                    backgroundImage:
+                                      "linear-gradient(to right, #8B5CF6, #C04CFD)",
+                                  }}
+                                >
+                                  View
+                                </button>
+
+                                {/* Since Edit button not yet implemented I have commented it out */}
+                                {/* <button
+                                  type="button"
+                                  className="inline-block mx-1 px-6 py-2.5 bg-yellow-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-700 active:shadow-lg transition duration-150 ease-in-out"
+                                >
+                                  Edit
+                                </button> */}
+                                <button
+                                  onClick={() => delete_data(el)}
+                                  type="button"
+                                  className="inline-block mx-1 px-6 py-2.5 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg transition duration-150 ease-in-out"
+                                  style={{
+                                    backgroundImage:
+                                      "linear-gradient(to right, #F87171, #DC2626)",
+                                  }}
+                                >
+                                  Delete
+                                </button>
+                              </td>
+                              <td className="text-sm text-gray-700 font-semibold px-6 py-4 whitespace-nowrap text-center">
+                                {parseInt(el.data_verification_stage, 10) ==
+                                1 ? (
+                                  parseInt(el.issuer_verification_status, 10) ==
+                                  1 ? (
+                                    <VerifiedUserIcon
+                                      className="text-green-700"
+                                      style={{ color: "#00FF00" }}
+                                    />
+                                  ) : (
+                                    <GppBadIcon
+                                      className="text-red-500"
+                                      style={{ color: "#FF0000" }}
+                                    />
+                                  )
+                                ) : (
+                                  <PendingActionsRoundedIcon
+                                    className="text-white"
+                                    style={{ color: "#FFFFFF" }}
+                                  />
+                                )}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </>
           )}
         </div>
       </section>

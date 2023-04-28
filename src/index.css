@@ -1,3 +1,56 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+body {
+  background-color: #282930;
+ 
+}
+.example::before {
+  filter: blur(10px) grayscale(50%);
+  z-index: -1;
+}
+.my-component {
+    background-color: rgba(255, 255, 255, 0.09);
+   
+   
+  }
+  .table-header {
+    border-radius: 10px;
+  }
+  
+@media only screen and (max-width: 767px) {
+  .box-left {
+    margin: 20px;
+    border-radius: 30px;
+    background-color: #1d1d1d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .box-right {
+    margin: 20px;
+    border-radius: 30px;
+    background-color: #1d1d1d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .box-right > :first-child {
+    font-size: 3rem;
+  }
+
+  .box-right > :last-child {
+    font-size: 1rem;
+  }
+
+  .bg-gray-1000 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
